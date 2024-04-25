@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schedule</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+  
+<div class="header">
+  <div class="header-content">
+    <!-- Place your bell and profile icons here -->
+    <a href="notification.html"><img src="images/notification.svg" alt="Notifications" class="icon"></a>
+    <img src="images/profile.svg" alt="Profile" class="icon">
+  </div>
+</div>
+
+
+<div class="sidebar">
+  <!-- Sidebar content -->
+  <ul>
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li>Request</a></li>
+    <li><a href="requests.html">Current Requests</a></li>
+    <li><a href="history.html">Requests History</a></li>
+    <li>Profiles</a></li>
+    <li><a href="technician.html">Technician</a></li>
+    <li><a href="customer.html">Customer</a></li>
+    <li>Schedule</a></li>
+    <li><a href="technician_schedule.html">Technician</a></li>
+    <!-- Additional links can be added here -->
+  </ul>
+  <button class="logout-btn">Log Out</button>
+</div>
+
+<div class="dashboard-container">
+  <div class="container">
+    <h1>Technician Schedule</h1> 
+
+    <div class="filter-section">
+      <label for="filter">Filter by Technician:</label>
+      <select id="filter">
+        <option value="">All Technicians</option>
+        <option value="Wilson">Wilson</option>
+        <option value="Michael">Michael</option>
+        <!-- Add more options for other technicians if needed -->
+      </select>
+      <button onclick="filterSchedule()">Filter</button>
+    </div>
+
+    <div class="technician-schedule-list">
+      <table>
+        <thead>
+          <tr>
+            <th>No.</th>
+            <th>Service No.</th>
+            <th>Customer Name</th>
+            <th>Technician Name</th>
+            <th>Date & Time</th>
+            <th>Problem</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>#0004</td>
+            <td>Dylan</td>
+            <td>Wilson</td>
+            <td>25/3/2024 2:00 P.M.</td>
+            <td>Alarm</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  
+  </div>
+</div>
+
+<script src="script.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

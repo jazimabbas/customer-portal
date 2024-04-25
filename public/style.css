@@ -1,0 +1,529 @@
+* {
+  box-sizing: border-box;
+}
+
+/* Header styles */
+.header {
+  
+  top: 0;
+  right: 0;
+  width: 100%;
+  background-color: #E9E9E9; /* Change background color as needed */
+  padding: 10px;
+  
+}
+
+.header-content {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.icon {
+  margin-left: 10px; /* Adjust margin between icons */
+  width: 50px; /* Adjust the width to your desired size */
+  height: 50px; /* Adjust the height to your desired size */
+}
+
+
+  
+/* Technician List table styles */
+.technician-list table {
+  /* Same styles as your other tables */
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.technician-list th, 
+.technician-list td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.technician-list th {
+  background-color: #f9f9f9;
+}
+
+
+.icon {
+  margin-right: 15px; /* Space between icons */
+}
+
+
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Arial', sans-serif;
+}
+
+.sidebar {
+  background-color: #707070;
+  padding: 20px;
+  width: 250px; /* Width of the sidebar */
+  height: 100%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
+.sidebar ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  margin-top: 70px;
+}
+
+.sidebar ul li a {
+  padding: 10px;
+  text-decoration: none;
+  font-size: 18px;
+  color: #fdfdfd;
+  display: block;
+  transition: background-color 0.3s; /* Adds a transition effect */
+}
+
+.sidebar ul li a.active,
+.sidebar ul li a:hover {
+  background-color: #ddd;
+}
+
+.sidebar ul li:nth-child(1) a {
+  
+}
+
+.sidebar ul li:nth-child(2)  {
+  color: #fdfdfd;
+  margin-left: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 13px; /* Font size for "Request" */
+}
+
+.sidebar ul li:nth-child(3) a {
+  
+}
+
+.sidebar ul li:nth-child(4) a {
+  
+}
+
+.sidebar ul li:nth-child(5) {
+  color: #fdfdfd;
+  margin-left: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 13px; 
+}
+
+.sidebar ul li:nth-child(6) a {
+  
+}
+
+.sidebar ul li:nth-child(7) a {
+  
+}
+
+.sidebar ul li:nth-child(8) {
+  color: #fdfdfd;
+  margin-left: 10px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 13px; 
+}
+
+.sidebar ul li:nth-child(9) a {
+  
+}
+
+.logout-btn {
+  padding: 10px;
+  width: calc(100% - 40px); /* Subtracting padding */
+  background-color: #B7B7B7; /* Bootstrap danger color */
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: opacity 0.3s; /* Adds a transition effect */
+  margin-top: auto; /* Pushes the button to the bottom */
+}
+
+.logout-btn:hover {
+  opacity: 0.8;
+}
+	
+.dashboard-container {
+  margin-left: 250px; /* Must be equal to the width of the sidebar */
+  padding: 20px;
+  background-color: #E9E9E9;
+  min-height: 100vh;
+}
+
+.status-indicators {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+.indicator {
+  display: flex;
+  align-items: column;
+  text-align: center;
+  
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.indicator .count {
+  margin-top: 5px;
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.indicator .icon {
+  
+  margin-right: 8px;
+  width: 50px;
+  height: 50px;
+}
+
+.ongoing {
+  background-color: #f0ad4e; /* Bootstrap warning color */
+}
+
+.completed {
+  background-color: #5cb85c; /* Bootstrap success color */
+}
+
+.pending {
+  background-color: #d9534f; /* Bootstrap danger color */
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+th {
+  background-color: #646464;
+  
+}
+.billtable{
+  
+}
+.billtable th{
+  background: none !important;
+}
+.billtable thead th {
+  border-bottom: 1px solid #000; /* Add a solid black border at the bottom */
+}
+
+.technician-list th {
+  background-color: #646464;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9; /* Zebra striping for table */
+}
+
+.urgent {
+  color: #d9534f; /* Bootstrap danger color */
+}
+
+.emergency {
+  color: #f0ad4e; /* Bootstrap warning color */
+}
+
+button {
+  padding: 5px 10px;
+  background-color: #5cb85c; /* Bootstrap success color */
+  color: white;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+.selected {
+  background-color: #f0f0f0; /* Change background color */
+  font-weight: bold; /* Make text bold */
+}
+
+/* CUSTOMER PENDING REQUEST */
+
+.problemPict {
+  width:30%;
+}
+
+.accordion {
+  --bs-accordion-btn-bg: #B7B7B7 !important;
+  --bs-accordion-active-bg: #8B8A8A !important;
+  --bs-accordion-active-color: #ffffff !important;
+}
+
+.accordion-body {
+  display: flex;
+}
+
+.problemPict-container {
+  flex: 0 0 auto; /* Flex container will not grow or shrink */
+  margin-right: 10px; /* Adjust as needed */
+}
+
+.request-detail {
+  padding-left: 20px;
+  flex: 1 1 auto; /* Flex container will grow and shrink */
+}
+
+/* CUSTOMER ONGOING REQUEST */
+.card {
+  position: relative;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+.card-body {
+ 
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  
+}
+
+.card-title,
+.card-text{
+  flex: 1; /* Take up remaining space */
+}
+
+.view-details-btn {
+  width: 10% !important;
+}
+
+
+
+/* CUSTOMER VIEW REQUEST */
+
+.request-details {
+  max-width: 800px;
+  margin: auto;
+}
+
+.request-details img {
+  max-width: 100%;
+  height: auto;
+}
+
+.container {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  padding-top: 50px;
+  padding-bottom: 50px;
+  background-color: #ffffff;
+}
+
+/* TECHNICIAN SCHEDULE */
+
+.filter-section{
+  padding-bottom: 15px;
+}
+
+/* ASSIGN TECHNICIAN */
+
+.notify-section{
+  padding-bottom: 10px;
+}
+
+/* CANCEL REQUEST */
+
+.cancel-request{
+  max-width: 800px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center items horizontally */
+}
+
+.cancel-request form{
+  width: 100%; /* Make the form full width */
+  max-width: 400px; /* Limit the maximum width of the form */
+}
+
+/* REQUEST HISTORY */
+
+.history-detail {
+  max-width: 800px;
+  margin: auto;
+}
+
+/* NOTIFICATION */
+
+
+
+
+/*CUSTOMER PROFILE************************************************************/
+.customer-container {
+  margin-left: 250px; /* Must be equal to the width of the sidebar */
+  padding: 20px;
+  background-color: #fff;
+  min-height: 100vh;
+}
+.customerflex{
+  display: flex;
+  align-items: center;
+}
+
+.customeractbtn{
+  display: flex;
+}
+.add-customer-btn{
+  margin-left: 5%;
+  width: 15%;
+  color: #f0f0f0;
+  background-color: #333;
+  border-radius: 5px;
+}
+.btn.btn-primary{
+  
+  margin-left: 30%;
+}
+
+.alignh2{
+  text-align: center;
+}
+.deletebtn{
+  margin-right: 45%;
+  border-radius: 5px;
+  background-color: #d9534f;
+  float: left;
+}
+.vedbtns{
+  font-size: 20px;
+  border-radius: 5px;
+  background-color: #333;
+  width: 60%;
+}
+.cusaddbtn{
+  font-size: 20px;
+  background-color: #333;
+  border-radius: 5px;
+  width: 20%;
+}
+/*TECHNICIAN PROFILE********************************************************/
+.employeerequestbtn{
+  margin-left: 50px;
+  background-color: #333 !important;
+  width: 100% !important; /* Set button width to 100% */
+  border-radius: 5px;
+}
+
+/* EMPLOYEE REQUEST ********************************************************/
+.tickdeny{
+  width: 25%;
+  height: auto;
+}
+.tickdeny2{
+  margin-top: 4%;
+  width: 15%;
+  height: auto;
+}
+
+.tickdenyback{
+  background-color: transparent;
+}
+
+.radiobtns{
+  float: right;
+  margin-right: 10%;
+  
+}
+
+.radiolabels{
+  font-size: 20px;
+  margin-left: 10%;
+}
+.emcfrmbtn{
+  font-size: 20px;
+
+  background-color: #333;
+  border-radius: 5px;
+}
+
+/* VIEW DETAILS ***************************/
+.cancelbtn{
+  background-color: #d9534f;
+  color: #E9E9E9;
+  border-radius: 5px;
+  width: 20%;
+
+
+}
+.cancelbtn2{
+  background-color: #5cb85c;
+  color: #E9E9E9;
+  border-radius: 5px;
+  width: 20%;
+
+}
+/* BILLING ***************/
+.rownew{
+  display: flex;
+}
+.rowcol1{
+  margin-left: 10%;
+  flex: auto;
+}
+.rowcol2{
+
+  margin-right: 10%;
+  flex: auto;
+}
+.container2 {
+  max-width: 1000px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+.container3 {
+  max-width: 900px;
+  margin: 20px auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+}
+.details1 {
+  margin-bottom: 20px;
+}
+.details1 p {
+  margin: 5px 0;
+}
+.customer-info1 {
+  display: flex;
+  justify-content: space-between;
+}
+.customer-info1 .customer-details1 {
+  flex-grow: 1;
+}
+.address{
+  font-size: 15px;
+  text-align: right;
+  line-height: 15px;
+}
+.hrbill{
+  border: 1px solid black;
+}

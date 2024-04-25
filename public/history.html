@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Current Request</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  
+<div class="header">
+  <div class="header-content">
+    <!-- Place your bell and profile icons here -->
+    <a href="notification.html"><img src="images/notification.svg" alt="Notifications" class="icon"></a>
+    <img src="images/profile.svg" alt="Profile" class="icon">
+  </div>
+</div>
+
+
+<div class="sidebar">
+  <!-- Sidebar content -->
+  <ul>
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li>Request</a></li>
+    <li><a href="requests.html">Current Requests</a></li>
+    <li><a href="history.html">Requests History</a></li>
+    <li>Profiles</a></li>
+    <li><a href="technician.html">Technician</a></li>
+    <li><a href="customer.html">Customer</a></li>
+    <li>Schedule</a></li>
+    <li><a href="technician_schedule.html">Technician</a></li>
+    <!-- Additional links can be added here -->
+  </ul>
+  <button class="logout-btn">Log Out</button>
+</div>
+
+<!-- Rest of your dashboard content -->
+
+<div class="dashboard-container">
+  <div class="container">
+    <h1>Requests History</h1> 
+    </br>
+    <input type="text" id="customerFilter" placeholder="Filter by Customer Name">
+    <input type="date" id="dateFilter">
+
+    <button id="filterButton">Filter</button>
+    </br>
+    </br>
+    </br>
+    <div id="cardItems">
+      <div class="history-item">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">#0005</h5>
+            <p class="card-text">Customer: <span class="customer-name">dylan</span></p>
+            <p class="card-text">Completed Date: <span class="completed-date">17/04/2024</span></p>
+            <a href="view_history_detail.html" class="btn btn-primary view-details-btn ml-auto">View Details</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">#0004</h5>
+            <p class="card-text">Customer: <span class="customer-name">zainab</span></p>
+            <p class="card-text">Completed Date: <span class="completed-date">15/04/2024</span></p>
+            <a href="view_history_detail.html" class="btn btn-primary view-details-btn ml-auto">View Details</a>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">#0003</h5>
+            <p class="card-text">Customer: <span class="customer-name">wilson</span></p>
+            <p class="card-text">Completed Date: <span class="completed-date">13/04/2024</span></p>
+            <a href="view_history_detail.html" class="btn btn-primary view-details-btn ml-auto">View Details</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script src="script.js"></script>
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

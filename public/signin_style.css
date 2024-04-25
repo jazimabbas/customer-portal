@@ -1,0 +1,38 @@
+/* ADMIN SIGN IN */ 
+
+body {
+  background-color: #646464 !important;
+}
+.container {
+  text-align: center;
+  background-color: #646464;
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 400px;
+  
+}
+.card {
+  padding-top: 50px;
+  padding-left: 100px;
+  padding-right: 100px;
+  padding-bottom: 50px;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+}
+
+.card-header {
+  background-color: transparent !important; /* Remove background color */
+  border-bottom: none !important; /* Remove border */
+} 
+
+.login-header {
+  color: #f2f2f2;
+}
+
+.btn {
+  background-color: #646464 !important;
+  width: 50% !important; /* Set button width to 100% */
+  margin: 0 auto !important;
+}
+
