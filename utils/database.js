@@ -1,10 +1,10 @@
 const mysql = require("mysql2");
 
 const pool = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  database: "cms",
-  password: "523221@Ali",
+  host: process.env.DB_HOST || "localhost",
+  user: process.env.DB_USER || "root",
+  database: process.env.DB_NAME || "cms",
+  password: process.env.DB_PASSWORD || "root",
 });
 
 function query(queryString, callback) {

@@ -1,5 +1,5 @@
-
 /* Technician Schedule Filter */
+const baseUrl = "http://localhost:5005/dashboarddatabase";
 function filterSchedule() {
   var input, filter, table, tr, td, i, txtValue;
   input = document.getElementById("filter");
@@ -12,133 +12,172 @@ function filterSchedule() {
     td = tr[i].getElementsByTagName("td")[3]; // Technician name column
     if (td) {
       txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1 || filter === '') {
+      if (txtValue.toUpperCase().indexOf(filter) > -1 || filter === "") {
         tr[i].style.display = "";
       } else {
         tr[i].style.display = "none";
       }
-    } 
+    }
   }
 }
 
-
 /* Popup windows for Declining Request */
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", function () {
   // Get all Decline buttons
-  var declineButtons = document.querySelectorAll('.decline');
+  var declineButtons = document.querySelectorAll(".decline");
 
   // Add click event listener to each Decline button
-  declineButtons.forEach(function(button) {
-    button.addEventListener('click', function () {
+  declineButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
       // Show the modal popup window
-      $('#declineModal').modal('show');
+      $("#declineModal").modal("show");
     });
   });
 
   // Handle the click event of the Confirm button inside the modal
-  document.getElementById('confirmDecline').addEventListener('click', function () {
-    // Get the reason for decline from the textarea
-    var declineReason = document.getElementById('declineReason').value;
+  document
+    .getElementById("confirmDecline")
+    .addEventListener("click", function () {
+      // Get the reason for decline from the textarea
+      var declineReason = document.getElementById("declineReason").value;
 
-    // Here, you can perform any further actions with the declineReason, such as sending it to the server
+      // Here, you can perform any further actions with the declineReason, such as sending it to the server
 
-    // Close the modal popup window
-    $('#declineModal').modal('hide');
-  });
+      // Close the modal popup window
+      $("#declineModal").modal("hide");
+    });
 });
 
-
 /* Confirmation windows for Assigning Technician */
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", function () {
   // Get all Assign buttons
-  var assignButtons = document.querySelectorAll('.assign-btn');
+  var assignButtons = document.querySelectorAll(".assign-btn");
 
   // Add click event listener to each Assign button
-  assignButtons.forEach(function(button) {
-    button.addEventListener('click', function () {
+  assignButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
       // Show confirmation modal
-      $('#confirmationModal').modal('show');
+      $("#confirmationModal").modal("show");
 
       // Get the assigned technician name
       var technicianName = this.parentNode.parentNode.children[1].textContent;
 
       // Set technician name in the confirmation modal
-      document.getElementById('technicianName').textContent = technicianName;
+      document.getElementById("technicianName").textContent = technicianName;
     });
   });
 });
 
-
 /* Display hidden textbox upon clicking Others*/
-document.addEventListener('DOMContentLoaded', function () {
-  var otherReasonRadio = document.getElementById('others');
-  var otherReasonText = document.getElementById('otherReason');
+document.addEventListener("DOMContentLoaded", function () {
+  var otherReasonRadio = document.getElementById("others");
+  var otherReasonText = document.getElementById("otherReason");
 
   // Show text box when "Others" radio button is selected
-  otherReasonRadio.addEventListener('change', function () {
+  otherReasonRadio.addEventListener("change", function () {
     if (this.checked) {
-      otherReasonText.style.display = 'block';
+      otherReasonText.style.display = "block";
     } else {
-      otherReasonText.style.display = 'none';
+      otherReasonText.style.display = "none";
     }
   });
 });
 
-
 /* Filter for Request History*/
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", function () {
   // Get filter elements
-  var customerFilterInput = document.getElementById('customerFilter');
-  var dateFilterInput = document.getElementById('dateFilter');
-  var filterButton = document.getElementById('filterButton');
-  var historyItems = document.querySelectorAll('.history-item');
+  var customerFilterInput = document.getElementById("customerFilter");
+  var dateFilterInput = document.getElementById("dateFilter");
+  var filterButton = document.getElementById("filterButton");
+  var historyItems = document.querySelectorAll(".history-item");
 
   // Add click event listener to the filter button
-  filterButton.addEventListener('click', function () {
+  filterButton.addEventListener("click", function () {
     var customerFilterValue = customerFilterInput.value.trim().toLowerCase();
     var dateFilterValue = dateFilterInput.value;
 
     // Loop through history items
     historyItems.forEach(function (item) {
-      var customerName = item.querySelector('.customer-name').textContent.trim().toLowerCase();
-      var completedDate = item.querySelector('.completed-date').textContent.trim();
+      var customerName = item
+        .querySelector(".customer-name")
+        .textContent.trim()
+        .toLowerCase();
+      var completedDate = item
+        .querySelector(".completed-date")
+        .textContent.trim();
 
       // Check if the item matches the filter criteria
-      if ((customerName.includes(customerFilterValue) || customerFilterValue === '') &&
-          (completedDate.includes(dateFilterValue) || dateFilterValue === '')) {
-        item.style.display = 'block'; // Show the item
+      if (
+        (customerName.includes(customerFilterValue) ||
+          customerFilterValue === "") &&
+        (completedDate.includes(dateFilterValue) || dateFilterValue === "")
+      ) {
+        item.style.display = "block"; // Show the item
       } else {
-        item.style.display = 'none'; // Hide the item
+        item.style.display = "none"; // Hide the item
       }
     });
   });
 });
-
 
 /*Cancel Button in cancel_request page*/
-document.addEventListener('DOMContentLoaded', function () {
-  document.getElementById('submitButton').addEventListener('click', function () {
-    // Get form data
-    var formData = new FormData(document.getElementById('cancelRequestForm'));
+document.addEventListener("DOMContentLoaded", function () {
+  document
+    .getElementById("submitButton")
+    .addEventListener("click", function () {
+      // Get form data
+      var formData = new FormData(document.getElementById("cancelRequestForm"));
 
-    // Submit the form data using fetch or any other method
-    fetch('your-submit-url', {
-      method: 'POST',
-      body: formData
-    })
-    .then(response => {
-      if (response.ok) {
-        // Handle successful form submission
-        console.log('Form submitted successfully');
-      } else {
-        // Handle failed form submission
-        console.error('Form submission failed');
-      }
-    })
-    .catch(error => {
-      console.error('Error submitting form:', error);
+      // Submit the form data using fetch or any other method
+      fetch("your-submit-url", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => {
+          if (response.ok) {
+            // Handle successful form submission
+            console.log("Form submitted successfully");
+          } else {
+            // Handle failed form submission
+            console.error("Form submission failed");
+          }
+        })
+        .catch((error) => {
+          console.error("Error submitting form:", error);
+        });
     });
-  });
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+  document
+    .getElementById("registrationForm")
+    .addEventListener("submit", (event) => {
+      event.preventDefault();
+
+      const formData = new FormData(
+        document.getElementById("registrationForm")
+      ); // Create FormData object
+
+      fetch("http://localhost:5005/dashboarddatabase/customer/register", {
+        method: "POST",
+        body: formData,
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.success) {
+            // Handle successful registration
+            console.log("Registration successful:", data.message);
+            // You can redirect to a success page or display a confirmation message here
+          } else {
+            // Handle failed registration
+            console.error("Registration failed:", data.message);
+            // You can display error messages to the user here
+          }
+        })
+        .catch((error) => {
+          console.error("Error registering customer:", error);
+          // Handle any errors that may occur during the request
+        });
+    });
+});
 /* Notification */

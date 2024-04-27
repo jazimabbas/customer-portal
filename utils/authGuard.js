@@ -1,10 +1,10 @@
 const jwt = require("jsonwebtoken");
 
-const secretKey = "mysecretkey";
+const secretKey = process.env.JWT_SECRET;
 
 function generateToken({ userId, email, type }) {
   return jwt.sign({ userId, email, type }, secretKey, {
-    expiresIn: "5h",
+    expiresIn: process.env.JWT_EXPIRY,
   });
 }
 
@@ -12,11 +12,11 @@ function generateToken({ userId, email, type }) {
 function decodeToken(req, res, next) {
   // Get token from request headers
   const token = req.headers["authorization"];
+  console.log(token);
 
   if (!token) {
     return res.status(401).json({ message: "No token provided" });
   }
-
   // Verify token and add user information to request object
   jwt.verify(token, secretKey, (err, decoded) => {
     if (err) {
