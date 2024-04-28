@@ -4,7 +4,7 @@ const { sendEmail } = require("../utils/mailService");
 const { v1: uuid } = require("uuid");
 function login(req, res) {
   const { email, password, userType } = req.body;
-
+  console.log(req.body);
   let isUserExistQuery = "";
   if (userType === "customer") {
     isUserExistQuery = `SELECT * FROM customer WHERE email="${email}" AND password="${password}"`;
@@ -26,7 +26,9 @@ function login(req, res) {
       throw error;
     }
     if (rows.length === 0) {
-      return res.status(401).json({ message: "Invalid email or password" });
+      return res
+        .status(401)
+        .json({ status: 401, message: "Invalid email or password" });
     }
     console.log(rows);
     const token = generateToken({
@@ -35,9 +37,12 @@ function login(req, res) {
       type: userType,
     });
     // Respond with success message
-    return res
-      .status(200)
-      .json({ message: "Login successful", result: rows[0], token });
+    return res.status(200).json({
+      message: "Login successful",
+      result: rows[0],
+      token,
+      status: 200,
+    });
   });
 }
 
@@ -82,23 +87,26 @@ function forgotPassword(req, res) {
     if (rows.length === 0) {
       return res.status(401).json({ message: "Invalid email" });
     }
+    const token = uuid();
+    console.log(token);
     let mailOptions = {
       from: process.env.MAIL_USERNAME,
       to: "sepadag869@buzblox.com", // email testing purpose
       subject: "Password Reset Link",
-      text: `Hey, click on the link below to reset your password, http://localhost:5005/reset-password.html?user=${userType}&email=${email}&token=${uuid()}`,
+      text: `Hey, click on the link below to reset your password, http://localhost:5005/reset_password.html?user=${userType}&email=${email}&token=${token}`,
     };
 
     sendEmail(mailOptions);
     db.query(
-      `UPDATE customer SET token="${uuid()}" WHERE email="${email}"`,
+      `UPDATE customer SET token="${token}" WHERE email="${email}"`,
       (error, rows) => {
         if (error) {
           throw error;
         }
-        return res
-          .status(200)
-          .json({ message: "reset-password link is sent on your email" });
+        return res.status(200).json({
+          message: "reset-password link is sent on your email",
+          status: 200,
+        });
       }
     );
   });
@@ -113,18 +121,20 @@ function resetPassword(req, res) {
   let resetPasswordQuery = "";
   let setTokenNullQuery = "";
   if (user === "customer") {
-    resetPasswordQuery = `UPDATE customer SET password="${password}" WHERE email="${email}" AND token="${token}"`;
-    setTokenNullQuery = `UPDATE customer SET token = NULL WHERE email = "${email}"`;
+    resetPasswordQuery = `SELECT * FROM customer WHERE email="${email}" AND token="${token}"`;
+    setTokenNullQuery = `UPDATE customer SET token = NULL,  password = "${password}" WHERE email = "${email}"`;
   } else if (user === "technician") {
-    resetPasswordQuery = `UPDATE technician SET password="${password}" WHERE email="${email}" AND token="${token}"`;
-    setTokenNullQuery = `UPDATE technician SET token = NULL WHERE email = "${email}"`;
+    resetPasswordQuery = `SELECT * FROM technician WHERE email = "${email}" AND token = "${token}"`;
+    setTokenNullQuery = `UPDATE technician SET token = NULL,  password = "${password}" WHERE email = "${email}"`;
   }
 
   db.query(resetPasswordQuery, (error, rows) => {
     if (error) {
       throw error;
     }
-    if (rows.affectedRows === 0) {
+    console.log(rows);
+    console.log(resetPasswordQuery);
+    if (rows.length === 0) {
       return res.status(401).json({ message: "link expired" });
     }
     db.query(setTokenNullQuery, (error, rows) => {
@@ -132,7 +142,9 @@ function resetPassword(req, res) {
         throw error;
       }
 
-      return res.status(200).json({ message: "Password changed successfully" });
+      return res
+        .status(200)
+        .json({ message: "Password changed successfully", status: 200 });
     });
   });
 }

@@ -58,15 +58,6 @@
             </tr>
           </thead>
           <tbody id="customer-details">
-            <!-- Pending requests will be dynamically inserted here -->
-            <tr>
-              <td>#0001</td>
-              <td>Walter White</td>
-              <td>weneedtocook@gmail.com</td>
-              <td class="text-center" style="width: 15%;"><a href="viewcustomerprofile.html"><button type="button" class="vedbtns">View</button></td></a>
-              <td class="text-center" style="width: 15%;"><a href="#"><button type="button" class="vedbtns" data-toggle="modal" data-target="#edit-modal">Edit</button></td></a>
-              <td class="text-center" style="width: 15%;"><a href="#"><button type="button" class="vedbtns" data-toggle="modal" data-target="#delete-modal">Delete</button></td></a>
-            </tr>
           </tbody>
         </table>
       </div>
@@ -123,34 +114,34 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button> 
       </div>
       <div class="modal-body">
-        <form>
+        <form class="" id="editForm">
             <h2 class="alignh2">Edit</h2>
           </br>
           <div class="form-group">
             <label for="name">Name:</label>
-            <input type="text" class="form-control" id="name" placeholder="Walter White">
+            <input type="text" class="form-control" id="edit-name" placeholder="Walter White">
           </div>
           <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" class="form-control" id="email" placeholder="weneedtocook@gmail.com">
+            <input type="email" class="form-control" id="edit-email" placeholder="weneedtocook@gmail.com">
           </div>
           <div class="form-group">
             <label for="location">Location:</label>
-            <input type="text" class="form-control" id="location" placeholder="Alberquerque New Mexico">
+            <input type="text" class="form-control" id="edit-location" placeholder="Alberquerque New Mexico">
           </div>
           <div class="form-group">
             <label for="alarm-brand">Alarm Brand:</label>
-            <input type="text" class="form-control" id="alarm-brand" placeholder="100">
+            <input type="text" class="form-control" id="edit-alarm-brand" placeholder="100">
           </div>
           <div class="form-group">
             <label for="autogate-brand">Autogate Brand:</label>
-            <input type="text" class="form-control" id="autogate-brand" placeholder="200">
+            <input type="text" class="form-control" id="edit-autogate-brand" placeholder="200">
           </div>
 
         </form>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-secondary">Save Changes</button>
+        <button type="submit" class="btn btn-secondary" id="save-changes">Save Changes</button>
       </div>
     </div>
   </div>
@@ -186,6 +177,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="popup.html"></script>
-<script src="customer.js"></script>
+<script src="./customer.js"></script>
 </body>
 </html>

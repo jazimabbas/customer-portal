@@ -21,6 +21,10 @@
           </div>
           <div class="card-body">
             <form id="registerForm">
+              <div id="errorMessage" class="my-3 text-danger"></div>
+              <div class="form-group">  
+                <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
+              </div>
               <div class="form-group">  
                 <input type="text" class="form-control" id="email" name="email" placeholder="Email" required>
               </div>
@@ -28,23 +32,12 @@
                 <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
               </div>
               <div class="form-group">  
-                <input type="text" class="form-control" id="name" name="name" placeholder="name" required>
-              </div>
-              <div class="form-group">  
                 <input type="text" class="form-control" id="phone_number" name="phone_number" placeholder="Phone number" required>
               </div>
               <div class="form-group">  
                 <input type="text" class="form-control" id="location" name="location" placeholder="Location" required>
-              </div>
-              <div class="form-group">  
-                <input type="text" class="form-control" id="auto_gate_brand" name="auto_gate_brand" placeholder="Auto gate brand" required>
-              </div>
-              <div class="form-group">  
-                <input type="text" class="form-control" id="alarm_brand" name="alarm_brand" placeholder="Alarm Brand" required>
-              </div>
-              <div class="form-group">  
-                <input type="date" class="form-control" id="warranty" name="warranty" placeholder="Warranty" required>
-              </div>
+              </div>  
+              <a id="alreadyHaveAccount" href="#">Already have an account?</a>
               <button type="submit" class="btn btn-primary btn-block btn-signin">Register</button>
             </form>
           </div>
@@ -58,6 +51,6 @@
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-<script src="script.js"></script>
+<script src="./register_customer.js"></script>
 </body>
 </html>

@@ -13,14 +13,18 @@ function customerRegister(req, res) {
     }
 
     if (rows.length > 0) {
-      return res.status(400).json({ message: "email already exists" });
+      return res
+        .status(400)
+        .json({ status: 400, message: "email already exists" });
     }
     const createUserQuery = `INSERT INTO customer (email, password, name, phone_number, location) VALUES ("${email}", "${password}", "${name}", "${phone_number}", "${location}")`;
     db.query(createUserQuery, (error, rows) => {
       if (error) {
         throw error;
       }
-      return res.status(201).json({ message: "User created successfully" });
+      return res
+        .status(201)
+        .json({ status: 201, message: "User created successfully" });
     });
   });
 }
@@ -29,14 +33,14 @@ function getAllCustomers(req, res) {
   const { type } = req.user;
 
   if (type !== "admin") {
-    return res.status(401).json({ message: "Unauthorized" });
+    return res.status(401).json({ message: "Unauthorized", status: 401 });
   }
   const getAllCustomersQuery = `SELECT * FROM customer`;
   db.query(getAllCustomersQuery, (error, customers) => {
     if (error) {
       throw error;
     }
-    return res.status(200).json({ customers });
+    return res.status(200).json({ status: 200, data: customers });
   });
 }
 
@@ -45,8 +49,8 @@ function getCustomerById(req, res) {
 
   const { type } = req.user;
 
-  if (type !== "admin") {
-    return res.status(401).json({ message: "Unauthorized" });
+  if (type === "technician") {
+    return res.status(401).json({ message: "Unauthorized", status: 401 });
   }
 
   const getCustomerQuery = `SELECT * FROM customer WHERE customer_id = ${customerId}`;
@@ -56,10 +60,12 @@ function getCustomerById(req, res) {
     }
 
     if (customer.length === 0) {
-      return res.status(404).json({ message: "Customer not found" });
+      return res
+        .status(404)
+        .json({ message: "Customer not found", status: 404 });
     }
 
-    return res.status(200).json({ customer: customer[0] });
+    return res.status(200).json({ status: 200, data: customer[0] });
   });
 }
 

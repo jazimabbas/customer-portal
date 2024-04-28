@@ -1,45 +1,76 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sign In</title>
-<link rel="stylesheet" href="signin_style.css">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
-  
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <div class="login-header">
-          <h2 class="text-center">Admin</h3>
-        </div>
-        <div class="card">
-          <div class="card-header">
-            <h3 class="text-center">Sign In</h3>
-          </div>
-          <div class="card-body">
-            <form action="#" method="post">
-              <div class="form-group">  
-                <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
-              </div>
-              <div class="form-group">
-                <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-              </div>
-              <button type="submit" class="btn btn-primary btn-block btn-signin">Login</button>
-            </form>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign In</title>
+    <link rel="stylesheet" href="signin_style.css" />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="card">
+            <div class="card-header">
+              <h3 class="text-center">Sign In</h3>
+            </div>
+            <div class="card-body">
+              <form action="#" method="post" id="loginForm">
+                <!-- Error message display area -->
+                <div id="errorMessage" class="my-3 text-danger"></div>
+                <div class="form-group">
+                  <select class="form-control" id="role" name="role" required>
+                    <option value="">Select Role</option>
+                    <option value="admin">admin</option>
+                    <option value="customer">customer</option>
+                    <option value="technician">technician</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="email"
+                    name="email"
+                    placeholder="Email"
+                    required
+                  />
+                </div>
+                <div class="form-group">
+                  <input
+                    type="password"
+                    class="form-control"
+                    id="password"
+                    name="password"
+                    placeholder="Password"
+                    required
+                  />
+                </div>
+                <a id="forgotPassword" href="./forgot_password.html"
+                  >Forgot your password?</a
+                >
+                <button
+                  type="submit"
+                  class="btn btn-primary btn-block btn-signin"
+                >
+                  Login
+                </button>
+              </form>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  
-  <!-- Bootstrap JS and jQuery (optional) -->
-  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-<script src="script.js"></script>
-</body>
+    <!-- Bootstrap JS and jQuery (optional) -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script src="./login.js"></script>
+  </body>
 </html>
