@@ -58,9 +58,9 @@
               <th colspan="3">Action</th>
             </tr>
           </thead>
-          <tbody id="customer-details">
+          <tbody id="technician-details">
             <!-- Pending requests will be dynamically inserted here -->
-            <tr>
+            <!-- <tr>
               <td>1</td>
               <td>Jesse Pinkman</td>
               <td>0123456789</td>
@@ -68,7 +68,7 @@
               <td class="text-center" style="width: 15%;"><a href="viewtechnicianprofile.html"><button type="button" class="vedbtns">View</button></td></a>
               <td class="text-center" style="width: 15%;"><button type="button" class="vedbtns" data-toggle="modal" data-target="#edit-modal">Edit</button></td>
               <td class="text-center" style="width: 15%;"><button type="button" class="vedbtns" data-toggle="modal" data-target="#delete-modal">Delete</button></td>
-            </tr>
+            </tr> -->
           </tbody>
         </table>
       </div>
@@ -87,23 +87,23 @@
           </br>
           <div class="form-group">
             <label for="name">Name:</label>
-            <input type="text" class="form-control" id="name" placeholder="Jesse Pinkman">
+            <input type="text" class="form-control name" id="name">
           </div>
           <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" class="form-control" id="email" placeholder="yeahscience@gmail.com">
+            <input type="email" class="form-control email" id="email" placeholder="yeahscience@gmail.com">
           </div>
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="location">Location:</label>
-            <input type="text" class="form-control" id="location" placeholder="Alberquerque New Mexico">
+            <input type="text" class="form-control location" id="location" placeholder="Alberquerque New Mexico">
+          </div> -->
+          <div class="form-group">
+            <label for="phone">Phone No:</label>
+            <input type="text" class="form-control phone" id="phone" >
           </div>
           <div class="form-group">
-            <label for="alarm-brand">Phone No:</label>
-            <input type="text" class="form-control" id="alarm-brand" placeholder="0123456789">
-          </div>
-          <div class="form-group">
-            <label for="autogate-brand">Job Type:</label>
-            <input type="text" class="form-control" id="autogate-brand" placeholder="Autogate">
+            <label for="job">Job Type:</label>
+            <input type="text" class="form-control job" id="job">
           </div>
 
         </form>
@@ -124,11 +124,11 @@
         <form>
             <h2 class="alignh2">Are you sure you want to delete this profile?</h2>
           </br>
-          <p><strong>Name:</strong> <span class="customer-name">John Doe</span></p>
-          <p><strong>Location:</strong> <span class="customer-address">123 Main Street, City, Country</span></p>
-          <p><strong>Email:</strong> <span class="customer-email">randomuser1234@example.com</span></p>
-          <p><strong>Phone No:</strong> <span class="customer-email">0123456789</span></p>
-          <p><strong>Job Type:</strong> <span class="customer-email">Autogate</span></p>
+          <p><strong>Name:</strong> <span class="technician-name"></span></p>
+          <!-- <p><strong>Location:</strong> <span class="technician-address"></span></p> -->
+          <p><strong>Email:</strong> <span class="technician-email"></span></p>
+          <p><strong>Phone No:</strong> <span class="technician_phone"></span></p>
+          <p><strong>Job Type:</strong> <span class="technician_job"></span></p>
         </form>
       </div>
       <div class="modal-footer">
@@ -141,7 +141,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="popup.js"></script>
-<script src="technician.js"></script>
+<script src="./technician.js"></script>
 </body>
 </html>

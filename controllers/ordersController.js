@@ -56,11 +56,10 @@ function pendingOrdersCount(req, res) {
   db.query(countQuery, (error, results) => {
     if (error) {
       console.error("Error counting pending orders:", error);
-      res.status(500).json({ error: "Internal server error" });
+      res.status(500).json({ error: "Internal server error", status: 500 });
       return;
     }
-
-    res.json({ count: results[0].orders_count });
+    res.json({ count: results[0].orders_count, status: 200 });
   });
 }
 
@@ -69,10 +68,10 @@ function completedOrdersCount(req, res) {
   db.query(countQuery, (error, results) => {
     if (error) {
       console.error("Error counting completed orders:", error);
-      res.status(500).json({ error: "Internal server error" });
+      res.status(500).json({ error: "Internal server error", status: 500 });
       return;
     }
-    res.json({ count: results[0].orders_count });
+    res.json({ count: results[0].orders_count, status: 200 });
   });
 }
 
@@ -81,10 +80,10 @@ function ongoingOrdersCount(req, res) {
   db.query(countQuery, (error, results) => {
     if (error) {
       console.error("Error counting ongoing orders:", error);
-      res.status(500).json({ error: "Internal server error" });
+      res.status(500).json({ error: "Internal server error", status: 500 });
       return;
     }
-    res.json({ count: results[0].orders_count });
+    res.json({ count: results[0].orders_count, status: 200 });
   });
 }
 

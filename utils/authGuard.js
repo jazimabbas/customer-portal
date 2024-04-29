@@ -12,12 +12,12 @@ function decodeToken(req, res, next) {
   // Get token from request headers
   const token = req.headers["authorization"];
   if (!token) {
-    return res.status(401).json({ message: "No token provided" });
+    return res.status(401).json({ message: "No token provided", status: 401 });
   }
 
   jwt.verify(token, secretKey, (err, decoded) => {
     if (err) {
-      return res.status(401).json({ message: "Invalid token" });
+      return res.status(401).json({ message: "Invalid token", status: 401 });
     }
     req.user = decoded;
     next();

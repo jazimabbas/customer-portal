@@ -37,15 +37,17 @@ function getAllTechnicians(req, res) {
   const { type } = req.user;
 
   if (type !== "admin") {
-    return res.status(401).json({ message: "Unauthorized" });
+    return res.status(401).json({ message: "Unauthorized", status: 401 });
   }
 
   db.query("SELECT * FROM technician", (error, rows) => {
     if (error) {
       console.error(error);
-      return res.status(500).json({ message: "Error fetching technicians" });
+      return res
+        .status(500)
+        .json({ message: "Error fetching technicians", status: 500 });
     }
-    return res.status(200).json({ result: rows });
+    return res.status(200).json({ result: rows, status: 200 });
   });
 }
 
@@ -54,20 +56,18 @@ function getTechnicianById(req, res) {
   const technicianId = req.params.id;
 
   if (type !== "admin") {
-    return res.status(401).json({ message: "Unauthorized" });
+    return res.status(401).json({ message: "Unauthorized", status: 401 });
   }
   const query = `SELECT * FROM technician WHERE technician_id = ${technicianId}`;
   db.query(query, (error, technician) => {
     if (error) {
       console.error(error);
-      return res.status(500).json({ message: "Error fetching technician" });
+      return res
+        .status(500)
+        .json({ message: "Error fetching technician", status: 500 });
     }
 
-    if (technician.length === 0) {
-      return res.status(404).json({ message: "Technician not found" });
-    }
-
-    return res.status(200).json({ technician: technician[0] });
+    return res.status(200).json({ technician: technician, status: 200 });
   });
 }
 
