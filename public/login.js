@@ -35,11 +35,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
           let redirectUrl = "";
           if (userType === "admin") {
-            redirectUrl = "http://localhost:5005/dashboard.html";
+            redirectUrl = "dashboard.html";
           } else if (userType === "customer") {
-            redirectUrl = "http://localhost:5005/dashboard.html";
+            redirectUrl = "customer_dashboard.html";
           } else if (userType === "technician") {
-            redirectUrl = "http://localhost:5005/dashboard.html";
+            redirectUrl = "dashboard.html";
           }
           window.location.href = redirectUrl;
         } else {

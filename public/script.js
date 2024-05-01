@@ -148,36 +148,4 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-document.addEventListener("DOMContentLoaded", function () {
-  document
-    .getElementById("registrationForm")
-    .addEventListener("submit", (event) => {
-      event.preventDefault();
-
-      const formData = new FormData(
-        document.getElementById("registrationForm")
-      ); // Create FormData object
-
-      fetch("http://localhost:5005/dashboarddatabase/customer/register", {
-        method: "POST",
-        body: formData,
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.success) {
-            // Handle successful registration
-            console.log("Registration successful:", data.message);
-            // You can redirect to a success page or display a confirmation message here
-          } else {
-            // Handle failed registration
-            console.error("Registration failed:", data.message);
-            // You can display error messages to the user here
-          }
-        })
-        .catch((error) => {
-          console.error("Error registering customer:", error);
-          // Handle any errors that may occur during the request
-        });
-    });
-});
 /* Notification */

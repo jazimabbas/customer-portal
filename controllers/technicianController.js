@@ -17,7 +17,9 @@ function createTechnician(req, res) {
     }
 
     if (rows.length > 0) {
-      return res.status(400).json({ message: "email already exists" });
+      return res
+        .status(400)
+        .json({ message: "email already exists", status: 400 });
     }
     const createTechnicianQuery = `INSERT INTO technician (email, name, password, specialization, status, phone_number)
           VALUES ('${email}', '${name}', '${password}', '${specialization}', 'free', '${phone_number}')`;
@@ -28,7 +30,11 @@ function createTechnician(req, res) {
       }
       return res
         .status(201)
-        .json({ message: "Technician created successfully", result: rows[0] });
+        .json({
+          message: "Technician created successfully",
+          result: rows[0],
+          status: 201,
+        });
     });
   });
 }
@@ -74,13 +80,13 @@ function getTechnicianById(req, res) {
 function updateTechnician(req, res) {
   const { type } = req.user;
   const technicianId = req.params.id;
-  const { name, specialization, phone_number } = req.body;
+  const { name, specialization, phone_number, email } = req.body;
 
   if (type !== "admin") {
-    return res.status(401).json({ message: "Unauthorized" });
+    return res.status(401).json({ message: "Unauthorized", status: 401 });
   }
 
-  const updateQuery = `UPDATE technician SET name ='${name}' , specialization = '${specialization}', phone_number = '${phone_number}' WHERE technician_id = ${technicianId}`;
+  const updateQuery = `UPDATE technician SET name ='${name}' , email = '${email}' , specialization = '${specialization}', phone_number = '${phone_number}' WHERE technician_id = ${technicianId}`;
   db.query(updateQuery, (error, result) => {
     if (error) {
       console.error(error);
@@ -91,7 +97,9 @@ function updateTechnician(req, res) {
       return res.status(404).json({ message: "Technician not found" });
     }
 
-    return res.status(200).json({ message: "Technician updated successfully" });
+    return res
+      .status(200)
+      .json({ message: "Technician updated successfully", status: 200 });
   });
 }
 
@@ -100,7 +108,7 @@ function deleteTechnician(req, res) {
   const technicianId = req.params.id;
 
   if (type !== "admin") {
-    return res.status(401).json({ message: "Unauthorized" });
+    return res.status(401).json({ message: "Unauthorized", status: 401 });
   }
 
   const deleteQuery = `DELETE FROM technician WHERE technician_id = ${technicianId}`;
@@ -114,7 +122,9 @@ function deleteTechnician(req, res) {
       return res.status(404).json({ message: "Technician not found" });
     }
 
-    return res.status(200).json({ message: "Technician deleted successfully" });
+    return res
+      .status(200)
+      .json({ message: "Technician deleted successfully", status: 200 });
   });
 }
 

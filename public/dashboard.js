@@ -1,25 +1,19 @@
-let baseUrl = "http://localhost:5005";
+const baseUrl = "http://localhost:5005";
 
 document.addEventListener("DOMContentLoaded", function () {
-  //   fetchOrders("pending-orders", updatePendingOrders);
-  //   fetchOrders("ongoing-orders", updateOngoingOrders);
-  //     fetchOrders("count-orders", fetchPendingOrdersCount);
-
   fetchPendingOrdersCount();
   fetchOngoingOrdersCount();
   fetchCompletedOrdersCount();
-});
+  fetchCustomerPendingOrders();
+  fetchCustomerOngoingOrders();
+  fetchTechnicians();
 
-function fetchOrders(endpoint, updateFunction) {
-  fetch(`/dashboarddatabase/${endpoint}`)
-    .then((response) => response.json())
-    .then((data) => {
-      alert(JSON.stringify(data)); // Convert the object to a string
-      return data; // Return the data for the next then() block
-    })
-    .then((data) => updateFunction(data)) // Update the function with the data
-    .catch((error) => console.error("Error fetching data:", error));
-}
+  const logout = document.getElementById("logout");
+  logout.addEventListener("click", () => {
+    localStorage.removeItem("token");
+    window.location.href = "login.html";
+  });
+});
 
 function fetchPendingOrdersCount() {
   const token = localStorage.getItem("token");
@@ -133,16 +127,18 @@ function countCompletedOrders(count) {
 }
 
 // Display Pending Orders
-function updatePendingOrders(orders) {
-  const container = document.querySelector(".customer-pending-list tbody");
-  container.innerHTML = ""; // Clear existing entries
+function customerPendingOrders(orders) {
+  const container = document.getElementById("customer-pending-orders");
+  if (orders.length === 0) {
+    container.innerHTML = "No pending orders found.";
+  }
   orders.forEach((order) => {
     container.innerHTML += `
             <tr>
-                <td>${order.order_id}</td>
+                <td>#000${order.order_id}</td>
                 <td>${order.order_detail}</td>
                 <td class="${order.urgency_level.toLowerCase()}">${
-      order.urgency_level
+      order.urgency_level[0].toUpperCase() + order.urgency_level.substring(1)
     }</td>
                 <td><button>View</button></td>
             </tr>
@@ -151,53 +147,127 @@ function updatePendingOrders(orders) {
 }
 
 // Display Ongoing Orders
-function updateOngoingOrders(orders) {
-  const container = document.querySelector(".customer-ongoing-list tbody");
-  container.innerHTML = ""; // Clear existing entries
+function customerOngoingOrders(orders) {
+  const container = document.getElementById("customer-ongoing-orders");
+  if (orders.length === 0) {
+    container.innerHTML = "No ongoing orders found.";
+    return;
+  }
   orders.forEach((order) => {
     container.innerHTML += `
-        <tr>
-        <td>${order.order_id}</td>
-        <td>${order.order_detail}</td>
-        <td class="${order.urgency_level.toLowerCase()}">${
-      order.urgency_level
+    <tr>
+    <td>#000${order.order_id}</td>
+    <td>${
+      order.technician_specialization[0].toUpperCase() +
+      order.technician_specialization.substring(1)
     }</td>
-        <td><button>View</button></td>
-    </tr>
+    <td class="${order.urgency_level.toLowerCase()}">${
+      order.urgency_level[0].toUpperCase() + order.urgency_level.substring(1)
+    }</td>
+    <td><a href="view_requests.html?id=${
+      order.order_id
+    }"><button>View</button></td></a>
+</tr>
         `;
   });
 }
 
 // Display Technician List
-// function fetchTechnician() {
-//   const token = localStorage.getItem("token");
-//   if (!token) {
-//     console.error("No token found");
-//     window.location.href = "login.html";
-//   }
-//   fetch("/dashboarddatabase/admin/technician")
-//     .then((response) => {
-//       if (!response.ok) {
-//         throw new Error("Network response was not ok");
-//       }
-//       return response.json();
-//     })
-//     .then((data) => {
-//       const list = document.getElementById("technician-list");
-//       list.innerHTML = ""; // Clear existing entries
-//       data.result.forEach((request, index) => {
-//         const row = `<tr>
-//                     <td>${request.technician_id}</td>
-//                     <td>${request.name}</td>
-//                     <td>${request.status}</td>
-//                     <td>${request.ongoing_order_id}</td>
-//                     <td>${request.specialization}</td>
-//                     <td>${request.email}</td>
-//                 </tr>`;
-//         list.innerHTML += row;
-//       });
-//     })
-//     .catch((error) => {
-//       console.error("Error fetching pending orders:", error);
-//     });
-// }
+function fetchTechnicians() {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    console.error("No token found");
+    window.location.href = "login.html";
+  }
+
+  fetch(`${baseUrl}/dashboarddatabase/admin/technicians`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `${token}`,
+    },
+  })
+    .then((response) => {
+      return response.json();
+    })
+    .then((data) => {
+      if (data.status === 401) {
+        window.location.href = "login.html";
+      }
+      const list = document.getElementById("technician_list");
+      list.innerHTML = "";
+      console.log(data.result);
+      data.result.forEach((item) => {
+        const row = `<tr>
+                    <td>${item.technician_id}</td>
+                    <td>${item.name}</td>
+                    <td>${item.status}</td>
+                    <td>${item.email}</td>
+                    <td>${item.specialization}</td>
+                    <td>${item.phone_number}</td>
+                </tr>`;
+        list.innerHTML += row;
+      });
+    })
+    .catch((error) => {
+      console.error("Error fetching pending orders:", error);
+    });
+}
+
+function fetchCustomerPendingOrders() {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    console.error("No token found");
+    window.location.href = "login.html";
+  }
+  fetch(`${baseUrl}/dashboarddatabase/orders?status=pending`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `${token}`,
+    },
+  })
+    .then((response) => {
+      if (response.status === 401) {
+        window.location.href = "login.html";
+      }
+      return response.json();
+    })
+    .then((data) => {
+      const orders = data.result;
+      console.log("Pending Orders:", orders);
+      customerPendingOrders(orders);
+    })
+    .catch((error) => {
+      console.error("Error fetching pending orders:", error);
+    });
+}
+
+function fetchCustomerOngoingOrders() {
+  const token = localStorage.getItem("token");
+  if (!token) {
+    console.error("No token found");
+    window.location.href = "login.html";
+  }
+  fetch(`${baseUrl}/dashboarddatabase/orders?status=ongoing`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `${token}`,
+    },
+  })
+    .then((response) => {
+      if (response.status === 401) {
+        window.location.href = "login.html";
+      }
+      return response.json();
+    })
+    .then((data) => {
+      const orders = data.result;
+      console.log("Ongoing Orders:", orders);
+      customerOngoingOrders(orders);
+    })
+    .catch((error) => {
+      console.error("Error fetching ongoing orders:", error);
+    });
+}

@@ -32,8 +32,6 @@ document.addEventListener("DOMContentLoaded", function () {
       .then((data) => {
         const customer = data.data;
         const editModal = document.getElementById("edit-modal");
-        // const modal = document.getElementById("edit-modal");
-        // console.log(document.getElementById("save-changes"));
 
         editModal.querySelector(".name").value = customer.name;
         editModal.querySelector(".email").value = customer.email;
@@ -46,12 +44,16 @@ document.addEventListener("DOMContentLoaded", function () {
         $("#edit-modal").modal("show");
 
         const editProfileBtn = document.getElementById("save-changes");
-        editProfileBtn.addEventListener("click", (event) => {
-          event.preventDefault();
-          const data = fetchUpdateFormData();
-          console.log(data);
-          //   updateCustomerById(customerId, data);
-        });
+        editProfileBtn.addEventListener(
+          "click",
+          (event) => {
+            event.preventDefault();
+            const data = fetchUpdateFormData();
+            console.log(data);
+            updateCustomerById(customerId, data);
+          },
+          { once: true }
+        );
       })
       .catch((error) => {
         console.error("Error fetching customer details for edit:", error);

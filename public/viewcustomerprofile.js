@@ -1,6 +1,12 @@
 const baseURL = "http://localhost:5005/dashboarddatabase";
 
 document.addEventListener("DOMContentLoaded", function () {
+  const logout = document.getElementById("logout");
+  logout.addEventListener("click", () => {
+    localStorage.removeItem("token");
+    window.location.href = "login.html";
+  });
+
   function fetchCustomerDetails(customerID) {
     const token = localStorage.getItem("token"); // Retrieve token from local storage
     if (!token) {

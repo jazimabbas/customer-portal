@@ -19,6 +19,7 @@ const {
   completedOrdersCount,
   ongoingOrdersCount,
   viewCompletedOrderHistory,
+  viewRequestDetail,
 } = require("../controllers/ordersController");
 const { decodeToken } = require("../utils/authGuard");
 const {
@@ -34,6 +35,7 @@ const {
   updateTechnician,
   deleteTechnician,
 } = require("../controllers/technicianController");
+const upload = require("../utils/imgUpload");
 
 // auth routes
 router.post("/login", login);
@@ -45,9 +47,10 @@ router.post("/customer/register", customerRegister);
 
 // order routes
 router.get("/orders", decodeToken, viewAllOrders);
-router.post("/orders", decodeToken, createOrder);
+router.post("/orders", decodeToken, upload.single("image"), createOrder);
 router.get("/orders/history", decodeToken, viewCompletedOrderHistory);
 router.put("/orders/:id/decline-order", decodeToken, declineOrder);
+router.get("/orders/:id/request-detail", decodeToken, viewRequestDetail);
 router.get("/orders/pending/count", decodeToken, pendingOrdersCount);
 router.get("/orders/completed/count", decodeToken, completedOrdersCount);
 router.get("/orders/ongoing/count", decodeToken, ongoingOrdersCount);

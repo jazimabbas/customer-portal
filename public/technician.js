@@ -29,35 +29,50 @@ document.addEventListener("DOMContentLoaded", function () {
   function fetchTechnicianByIdForEdit(technicianId) {
     return fetchTechnicianById(technicianId)
       .then((data) => {
-        console.log(data.technician[0]);
         const technician = data.technician[0];
         const editModal = document.getElementById("edit-modal");
 
         editModal.querySelector(".name").value = technician.name;
         editModal.querySelector(".email").value = technician.email;
-        // editModal.querySelector(".location").value = technician.location;
         editModal.querySelector(".phone").value = technician.phone_number;
         editModal.querySelector(".job").value = technician.specialization;
 
         // Show the edit modal
         $("#edit-modal").modal("show");
+        const saveChangesBtn = document.getElementById("savechange");
+        saveChangesBtn.addEventListener(
+          "click",
+          (event) => {
+            event.preventDefault();
+            const editFormData = getEditFormData();
+            console.log(editFormData);
+            updateTechnicianById(technicianId, editFormData);
+          },
+          { once: true }
+        );
       })
       .catch((error) => {
         console.error("Error fetching technician details for edit:", error);
-        throw error; // Re-throw the error to propagate it further
+        throw error;
       });
   }
 
-  function fetchTechnicianByIdForDelete(customerId) {
-    return fetchTechnicianById(customerId)
+  function getEditFormData() {
+    const editModal = document.getElementById("edit-modal");
+    const name = editModal.querySelector(".name").value;
+    const email = editModal.querySelector(".email").value;
+    const phone_number = editModal.querySelector(".phone").value;
+    const specialization = editModal.querySelector(".job").value;
+    return { name, email, phone_number, specialization };
+  }
+  function fetchTechnicianByIdForDelete(technicianId) {
+    return fetchTechnicianById(technicianId)
       .then((data) => {
         const technician = data.technician[0];
         const deleteModal = document.getElementById("delete-modal");
 
         deleteModal.querySelector(".technician-name").textContent =
           technician.name;
-        // deleteModal.querySelector(".technician-address").textContent =
-        //   technician.location;
         deleteModal.querySelector(".technician-email").textContent =
           technician.email;
         deleteModal.querySelector(".technician_phone").textContent =
@@ -70,20 +85,112 @@ document.addEventListener("DOMContentLoaded", function () {
         // Add event listener to the delete button in modal
         const deleteProfileBtn = deleteModal.querySelector(".deletebtn");
         deleteProfileBtn.addEventListener("click", () => {
-          // confirmDelete(customerId);
+          confirmDeleteTechnician(technicianId);
         });
       })
       .catch((error) => {
-        console.error("Error fetching customer details for deletion:", error);
+        console.error("Error fetching technician details for deletion:", error);
       });
   }
-  function confirmDeleteCustomer(customerId) {
+
+  function updateTechnicianById(technicianId, updatedTechnicianData) {
+    console.log("technician Id", technicianId);
     const token = localStorage.getItem("token");
     if (!token) {
       console.error("No token found in local storage");
       window.location.href = "login.html";
     }
-    fetch(`${baseURL}/admin/customers/${customerId}`, {
+    fetch(`${baseURL}/admin/technicians/${technicianId}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${token}`,
+      },
+      body: JSON.stringify(updatedTechnicianData),
+    })
+      .then((response) => {
+        console.log(response);
+
+        if (!response.ok) {
+          throw new Error("Failed to update technician details");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.status === 401) {
+          window.location.href = "unauthorize_response.html";
+        } else if (data.status === 200) {
+          console.log("Technician details updated successfully");
+          $("#edit-modal").modal("hide");
+          fetchTechnicians();
+        } else {
+          console.error("Login failed:", data.message);
+        }
+      })
+      .catch((error) =>
+        console.error("Error updating technician details:", error)
+      );
+  }
+
+  function getNewTechnicianData() {
+    const addModal = document.getElementById("add-modal");
+    // console.log(addModal);
+    const name = addModal.querySelector(".name").value;
+    const email = addModal.querySelector(".email").value;
+    const phone_number = addModal.querySelector(".phone").value;
+    const password = addModal.querySelector(".password").value;
+    const specialization = addModal.querySelector(".specialization").value;
+    return { name, email, phone_number, specialization, password };
+  }
+
+  function addTechnician(newTechnicianData) {
+    const errorMessage = document.getElementById("errorMessage");
+    errorMessage.textContent = "";
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.error("No token found in local storage");
+      window.location.href = "login.html";
+      return;
+    }
+
+    fetch(`${baseURL}/admin/technicians`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${token}`,
+      },
+      body: JSON.stringify(newTechnicianData),
+    })
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        if (data.status === 401) {
+          window.location.href = "unauthorize_response.html";
+        } else if (data.status === 400) {
+          errorMessage.textContent = data.message;
+          console.error("Failed to add new technician:", data.message);
+        } else if (data.status === 201) {
+          console.log("Technician added successfully");
+          $("#add-modal").modal("hide");
+
+          fetchTechnicians();
+        } else {
+          console.error("Failed to add technician:", data.message);
+        }
+      })
+      .catch((error) => {
+        console.error("Error adding technician:", error);
+      });
+  }
+
+  function confirmDeleteTechnician(technicianId) {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.error("No token found in local storage");
+      window.location.href = "login.html";
+    }
+    fetch(`${baseURL}/admin/technicians/${technicianId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -95,14 +202,14 @@ document.addEventListener("DOMContentLoaded", function () {
           window.location.href = "unauthorize_response.html";
         }
         if (!response.ok) {
-          throw new Error("Failed to delete customer");
+          throw new Error("Failed to delete Technician");
         }
         console.log("Customer deleted successfully");
         $("#delete-modal").modal("hide"); // Hide delete modal
-        fetchCustomers(); // Refresh customer list
+        fetchTechnicians(); // Refresh Technician list
       })
       .catch((error) => {
-        console.error("Error deleting customer:", error);
+        console.error("Error deleting technician:", error);
       });
   }
   function fetchTechnicians() {
@@ -166,4 +273,15 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   fetchTechnicians();
+
+  document.getElementById("addTechnician").addEventListener("click", () => {
+    const data = getNewTechnicianData();
+    addTechnician(data);
+  });
+
+  const logout = document.getElementById("logout");
+  logout.addEventListener("click", () => {
+    localStorage.removeItem("token");
+    window.location.href = "login.html";
+  });
 });

@@ -32,7 +32,7 @@
     <li><a href="technician_schedule.html">Technician</a></li>
     <!-- Additional links can be added here -->
   </ul>
-  <button class="logout-btn">Log Out</button>
+  <button id="logout" class="logout-btn">Log Out</button>
 </div>
 
 <!-- Rest of your dashboard content -->
@@ -70,24 +70,13 @@
           <th>Action</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>#0001</td>
-          <td>Auto-gate</td>
-          <td class="urgent">Urgent</td>
-          <td><button>View</button></td>
-        </tr>
-        <tr>
-          <td>#0003</td>
-          <td>Auto-gate</td>
-          <td class="emergency">Emergency</td>
-          <td><button>View</button></td>
-        </tr>
+      <tbody id="customer-pending-orders">
+        
       </tbody>
     </table>
   </div>
   <!-- Customer Ongoing List -->
-  <div class="customer-ongoing-list">
+  <div class="customer-ongoing-list" >
     <h2>Customer Ongoing List</h2>
     <table>
       <thead>
@@ -98,13 +87,8 @@
           <th>Action</th>
         </tr>
       </thead>
-      <tbody>
-        <tr>
-          <td>#0004</td>
-          <td>Alarm</td>
-          <td>Standard</td>
-          <td><button>View</button></td>
-        </tr>
+      <tbody id="customer-ongoing-orders">
+       
       </tbody>
     </table>
   </div>
@@ -115,24 +99,16 @@
     <table>
       <thead>
         <tr>
-          <th>Service No.</th>
+          <th>Id</th>
           <th>Name</th>
           <th>Status</th>
-          <th>Customer</th>
+          <th>Email</th>
           <th>Problem Type</th>
-          <th>Location</th>
+          <th>Phone</th>
         </tr>
       </thead>
-      <tbody>
-        <!-- Populate table rows with data -->
-        <tr>
-          <td>#0004</td>
-          <td>Wilson</td>
-          <td>Standard</td>
-          <td>Dylan</td>
-          <td>Alarm</td>
-          <td>Taman Hui Sing</td>
-        </tr>
+      <tbody id="technician_list">
+      
       </tbody>
     </table>
   </div>

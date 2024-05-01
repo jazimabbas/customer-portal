@@ -33,48 +33,13 @@
     <li><a href="technician_schedule.html">Technician</a></li>
     <!-- Additional links can be added here -->
   </ul>
-  <button class="logout-btn">Log Out</button>
+  <button id="logout" class="logout-btn">Log Out</button>
 </div>
 
 <div class="dashboard-container">
   <div class="container">
-    <div class="request-details">
-      <h2>Request Details</h2>
-      <div class="row">
-        <div class="col-md-6">
-          <h4>Customer Information</h4>
-          <p><strong>Name:</strong> <span class="customer-name">John Doe</span></p>
-          <p><strong>Address:</strong> <span class="customer-address">123 Main Street, City, Country</span></p>
-        </div>
-        <div class="col-md-6">
-          <h4>Request Information</h4>
-          <p><strong>Service No.:</strong> <span class="service_no">#0005</span></p>
-          <p><strong>Problem:</strong> <span class="problem">Auto-gate</span></p>
-          <p><strong>Priority:</strong> <span class="priority">Emergency</span></p>
-          <p><strong>Completed on:</strong> <span class="datetime">17/04/2024 - 10:00 AM</span></p>
-          <p><strong>Status:</strong> <span class="status">Urgent</span></p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <h4>Technician Information</h4>
-          <p><strong>Name:</strong> <span class="technician-name">Michael Smith</span></p>
-          <p><strong>Estimated Time of Arrival:</strong> <span class="ETA">January 1, 2024 - 9:30 AM</span></p>
-          <p><strong>Contact Number:</strong> <span class="technician-phone">+1234567890</span></p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-12">
-          <h4>Problem Details</h4>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed euismod, justo nec rhoncus fermentum, tellus nisl varius ipsum, ut ultricies nisl nulla nec lectus.</p>
-          <img src="images/autogate.jpeg" alt="Problem Image">
-        </div>
-      </div>
-      <div class="row mt-4">
-        <div class="col-md-12 text-center">
-          <a href="cancel_requests.html" ><button class="cancelbtn">Cancel Request</button></a> 
-        </div>
-      </div>
+    <div class="request-details" id="request_details">
+      
     </div>
   </div>
   
@@ -82,9 +47,9 @@
   
 </div>
 
-<script src="script.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+<script src="./view_requests.js"></script>
 </body>
 </html>

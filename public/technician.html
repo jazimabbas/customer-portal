@@ -33,7 +33,7 @@
     <li><a href="technician_schedule.html">Technician</a></li>
     <!-- Additional links can be added here -->
   </ul>
-  <button class="logout-btn">Log Out</button>
+  <button id="logout" class="logout-btn">Log Out</button>
 </div>
 
 <!-- Rest of your dashboard content -->
@@ -43,7 +43,10 @@
     <div class="customerflex">
       <h1>Technician List</h1> 
       
+      <a href="#" class="mr-4"><button class="employeerequestbtn" data-toggle="modal" data-target="#add-modal">Add Employee</button></a>
+      
       <a href="employeerequest.html"><button class="employeerequestbtn">Employee Request</button></a>
+
     </div>
     <!-- Pending Request List -->
     <div class="pending-request">
@@ -59,18 +62,52 @@
             </tr>
           </thead>
           <tbody id="technician-details">
-            <!-- Pending requests will be dynamically inserted here -->
-            <!-- <tr>
-              <td>1</td>
-              <td>Jesse Pinkman</td>
-              <td>0123456789</td>
-              <td>Autogate</td>
-              <td class="text-center" style="width: 15%;"><a href="viewtechnicianprofile.html"><button type="button" class="vedbtns">View</button></td></a>
-              <td class="text-center" style="width: 15%;"><button type="button" class="vedbtns" data-toggle="modal" data-target="#edit-modal">Edit</button></td>
-              <td class="text-center" style="width: 15%;"><button type="button" class="vedbtns" data-toggle="modal" data-target="#delete-modal">Delete</button></td>
-            </tr> -->
           </tbody>
         </table>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" role="dialog" id="add-modal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button> 
+      </div>
+      <div class="modal-body">
+        <form id="addTechnicianForm">
+          <div class="d-flex flex-column align-items-center">
+            <h2 class="alignh2">Add Technician</h2>
+            <div id="errorMessage" class="my-3 text-danger"></div>
+          </div>
+        </br>
+          <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control name" id="name">
+          </div>
+          <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" class="form-control email" id="email">
+          </div>
+          <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="text" class="form-control password" id="password">
+          </div>
+          <div class="form-group">
+            <label for="specialization">Specialization:</label>
+            <select class="form-control specialization" id="specialization">
+              <option value="alarm">Alarm</option>
+              <option value="autogate">Autogate</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone Number:</label>
+            <input type="text" id="phone" class="form-control phone">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button  type="submit" id="addTechnician" class="cusaddbtn addBtn" style="margin-right: 40%;">Add</button>
       </div>
     </div>
   </div>
@@ -87,29 +124,25 @@
           </br>
           <div class="form-group">
             <label for="name">Name:</label>
-            <input type="text" class="form-control name" id="name">
+            <input type="text" class="form-control name" id="edit-name">
           </div>
           <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" class="form-control email" id="email" placeholder="yeahscience@gmail.com">
+            <input type="email" class="form-control email" id="edit-email" placeholder="yeahscience@gmail.com">
           </div>
-          <!-- <div class="form-group">
-            <label for="location">Location:</label>
-            <input type="text" class="form-control location" id="location" placeholder="Alberquerque New Mexico">
-          </div> -->
           <div class="form-group">
             <label for="phone">Phone No:</label>
-            <input type="text" class="form-control phone" id="phone" >
+            <input type="text" class="form-control phone" id="edit-phone" >
           </div>
           <div class="form-group">
             <label for="job">Job Type:</label>
-            <input type="text" class="form-control job" id="job">
+            <input type="text" class="form-control job" id="edit-job">
           </div>
 
         </form>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-secondary">Save Changes</button>
+        <button id="savechange" type="submit" class="btn btn-secondary editbtn">Save Changes</button>
       </div>
     </div>
   </div>
