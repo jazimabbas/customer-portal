@@ -28,13 +28,11 @@ function createTechnician(req, res) {
       if (error) {
         throw error;
       }
-      return res
-        .status(201)
-        .json({
-          message: "Technician created successfully",
-          result: rows[0],
-          status: 201,
-        });
+      return res.status(201).json({
+        message: "Technician created successfully",
+        result: rows[0],
+        status: 201,
+      });
     });
   });
 }
