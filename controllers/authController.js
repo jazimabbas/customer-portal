@@ -62,11 +62,17 @@ function changePassword(req, res) {
       throw error;
     }
     if (rows.affectedRows === 0) {
-      return res.status(401).json({ message: "Invalid old password" });
+      return res
+        .status(400)
+        .json({ message: "Invalid old password", status: 400 });
     }
     return res
       .status(200)
-      .json({ message: "Password changed successfully", result: rows[0] });
+      .json({
+        message: "Password changed successfully",
+        result: rows[0],
+        status: 200,
+      });
   });
 }
 
