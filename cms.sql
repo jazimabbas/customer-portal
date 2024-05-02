@@ -140,6 +140,7 @@ CREATE TABLE `technician` (
   `name` varchar(50) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `specialization` enum('alarm','autogate') DEFAULT NULL,
+  `location` varchar(255) DEFAULT NULL,
   `status` enum('working','free') DEFAULT 'free',
   `ongoing_order_id` int(11) DEFAULT NULL,
   `phone_number` varchar(20) DEFAULT NULL,
