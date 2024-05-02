@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
           } else if (userType === "customer") {
             redirectUrl = "customer_dashboard.html";
           } else if (userType === "technician") {
-            redirectUrl = "dashboard.html";
+            redirectUrl = "technician_dashboard.html";
           }
           window.location.href = redirectUrl;
         } else {

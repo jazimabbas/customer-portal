@@ -85,7 +85,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const historyData = data.result;
     console.log(historyData);
     const cardItems = document.getElementById("historyItem");
-    cardItems.innerHTML = `<h3>No history found</h3>`;
+    cardItems.innerHTML = "";
+    if (historyData.length === 0) {
+      cardItems.innerHTML = `<h3>No history found</h3>`;
+    }
 
     historyData.forEach((item) => {
       cardItems.appendChild(createOrderCard(item));

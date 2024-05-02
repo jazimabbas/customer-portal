@@ -39,12 +39,16 @@ function createTechnician(req, res) {
 
 function getAllTechnicians(req, res) {
   const { type } = req.user;
+  const { status } = req.query;
 
   if (type !== "admin") {
     return res.status(401).json({ message: "Unauthorized", status: 401 });
   }
-
-  db.query("SELECT * FROM technician", (error, rows) => {
+  let dbQuery = `SELECT * FROM technician`;
+  if (status === "free") {
+    dbQuery += ` WHERE ongoing_order_id IS NULL`;
+  }
+  db.query(dbQuery, (error, rows) => {
     if (error) {
       console.error(error);
       return res

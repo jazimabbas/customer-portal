@@ -66,14 +66,33 @@ document.addEventListener("DOMContentLoaded", function () {
           accordionBody.innerHTML = `
               <img src="${request.order_img}" class="problemPict">
               <div class="request-detail">
-                <strong>Customer:</strong> <div class="customer-name">${request.customer_name}</div><br>
-                <strong>Address:</strong> <div class="customer-address">${request.customer_address}</div><br>
-                <strong>Problem:</strong> <div class="problem">${request.problem_type}</div><br>
-                <strong>Priority:</strong> <div class="priority">${request.urgency_level}</div><br>
+                <strong>Customer:</strong> <div class="customer-name">${
+                  request.customer_name
+                }</div><br>
+                <strong>Address:</strong> <div class="customer-address">${
+                  request.customer_location
+                }</div><br>
+                <strong>Problem:</strong> <div class="problem">${
+                  request.problem_type
+                }</div><br>
+                <strong>Priority:</strong> <div class="priority">${
+                  request.urgency_level
+                }</div><br>
                 <strong>Date & Time:</strong> <div class="datetime">${orderDateTime}</div><br>
-                <strong>Description:</strong> <div class="description">${request.order_detail}</div><br>
-                <a href="assign_requests.html" class="btn btn-primary accept-btn ml-auto">Accept</a>
-                <button class="btn btn-danger decline">Decline</button>
+                <strong>Description:</strong> <div class="description">${
+                  request.order_detail
+                }</div><br>
+                <strong>Technician Requested:</strong> <div class="technician_request">${
+                  request.technician_id ? "request" : "Not Yet"
+                }</div><br>
+                <a href="assign_request.html?id=${
+                  request.order_id
+                }" class="btn btn-primary accept-btn ml-auto">Accept</a>
+                <button id="declineBtn-${
+                  request.order_id
+                }" class="btn btn-danger decline-btn" data-toggle="modal" data-target="#declineModal">
+                Decline
+              </button>
               </div>
             `;
 
@@ -83,6 +102,16 @@ document.addEventListener("DOMContentLoaded", function () {
           accordionItem.appendChild(accordionCollapse);
 
           pendingList.appendChild(accordionItem);
+          const declineButton = document.getElementById(
+            `declineBtn-${request.order_id}`
+          );
+          declineButton.addEventListener("click", function () {
+            document.getElementById(
+              "declineOrderId"
+            ).innerHTML = `#000${request.order_id}`;
+            document.getElementById("declineReason").value = "";
+            $("#declineModal").modal("show");
+          });
         });
       })
       .catch((error) => {
@@ -139,6 +168,55 @@ document.addEventListener("DOMContentLoaded", function () {
 
   fetchOngoingRequests();
   fetchPendingRequests();
+
+  function declineRequest(id, cancel_details) {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.error("No token found in local storage");
+      window.location.href = "login.html";
+    }
+    fetch(`${baseURL}/orders/${id}/decline-request`, {
+      method: "PUT",
+      body: JSON.stringify({ cancel_details }),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `${token}`,
+      },
+    })
+      .then((response) => {
+        if (response.status === 401) {
+          window.location.href = "login.html";
+        }
+        return response.json();
+      })
+      .then((data) => {
+        if (data.status === 200) {
+          window.location.reload();
+        } else {
+          console.error("Decline request failed:", data.message);
+        }
+      });
+  }
+
+  const confirmDecline = document.getElementById("confirmDecline");
+
+  confirmDecline.addEventListener("click", function () {
+    const declineReason = document.getElementById("declineReason").value;
+    if (declineReason.trim() === "") {
+      document.getElementById("declineError").innerHTML =
+        "Please enter a reason for declining the order.";
+      return;
+    }
+    const id = document.getElementById("declineOrderId").innerHTML.slice(4);
+    document.getElementById("declineError").innerHTML = "";
+    declineRequest(id, declineReason);
+  });
+
+  document
+    .getElementById("declineReason")
+    .addEventListener("input", function () {
+      document.getElementById("declineError").innerHTML = "";
+    });
 
   const logout = document.getElementById("logout");
   logout.addEventListener("click", () => {

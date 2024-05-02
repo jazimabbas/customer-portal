@@ -102,18 +102,37 @@ function viewRequestDetail(req, res) {
 
 function declineOrder(req, res) {
   const { type } = req.user;
-  if (type !== "admin") {
-    return res.status(401).json({ message: "Unauthorized" });
+  const { cancel_details } = req.body;
+  if (type === "customer") {
+    return res.status(401).json({ message: "Unauthorized", status: 401 });
   }
   const { id } = req.params;
-  const declineOrderQuery = `UPDATE ordertable SET order_status='cancelled' WHERE order_id=${id}`;
+  const declineOrderQuery = `UPDATE ordertable SET order_status='cancelled', cancel_details='${cancel_details}' WHERE order_id=${id}`;
   db.query(declineOrderQuery, (error, rows) => {
     if (error) {
       throw error;
     }
     return res
-      .status(201)
-      .json({ message: "Order declined successfully", result: rows[0] });
+      .status(200)
+      .json({ message: "Order declined successfully", status: 200 });
+  });
+}
+
+function assignTechnician(req, res) {
+  const { type } = req.user;
+  const { id } = req.params;
+  const { technician_id } = req.body;
+  if (type !== "admin") {
+    return res.status(401).json({ message: "Unauthorized", status: 401 });
+  }
+  const assignTechnicianQuery = `UPDATE ordertable SET technician_id=${technician_id} WHERE order_id=${id}`;
+  db.query(assignTechnicianQuery, (error, rows) => {
+    if (error) {
+      throw error;
+    }
+    return res
+      .status(200)
+      .json({ message: "Order assigned successfully", status: 200 });
   });
 }
 
@@ -156,6 +175,12 @@ function ongoingOrdersCount(req, res) {
   });
 }
 
+function pendingOrdersQuery() {
+  return `SELECT o.*, c.name AS customer_name, c.email AS customer_email, c.location AS customer_location
+  FROM ordertable o
+  JOIN customer c ON o.customer_id = c.customer_id`;
+}
+
 function viewAllOrders(req, res) {
   const { status } = req.query;
   const { userId, type } = req.user;
@@ -164,7 +189,7 @@ function viewAllOrders(req, res) {
   if (type === "customer") {
     // Select orders associated with the customer and join customer information
     viewAllOrdersQuery = `
-      SELECT o.*, c.name AS customer_name, c.email AS customer_email
+      SELECT o.*, c.name AS customer_name, c.email AS customer_email, c.location AS customer_location
       FROM ordertable o
       JOIN customer c ON o.customer_id = c.customer_id
       WHERE o.customer_id = ${userId}
@@ -172,7 +197,7 @@ function viewAllOrders(req, res) {
   } else if (type === "technician") {
     // Select orders associated with the technician and join technician information
     viewAllOrdersQuery = `
-      SELECT o.*, t.name AS technician_name,  t.email AS technician_email
+      SELECT o.*, t.name AS technician_name,  t.email AS technician_email, c.location AS customer_location
       FROM ordertable o
       JOIN technician t ON o.technician_id = t.technician_id
       WHERE o.technician_id = '${userId}'
@@ -183,6 +208,7 @@ function viewAllOrders(req, res) {
       SELECT o.*, c.name AS customer_name,
       c.location AS customer_address,
       c.email AS customer_email,
+      c.location AS customer_location,
       t.name AS technician_name,
       t.email AS technician_email,
       t.specialization AS technician_specialization
@@ -191,7 +217,9 @@ function viewAllOrders(req, res) {
       LEFT JOIN technician t ON o.technician_id = t.technician_id
     `;
   }
-
+  if (status === "pending" && type === "admin") {
+    viewAllOrdersQuery = pendingOrdersQuery();
+  }
   // Append status filter if provided and user is admin or technician
   if (status && (type === "admin" || type === "technician")) {
     viewAllOrdersQuery += ` WHERE o.order_status = '${status}'`;
@@ -245,4 +273,5 @@ module.exports = {
   declineOrder,
   viewCompletedOrderHistory,
   viewRequestDetail,
+  assignTechnician,
 };

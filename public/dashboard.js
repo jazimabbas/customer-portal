@@ -140,7 +140,7 @@ function customerPendingOrders(orders) {
                 <td class="${order.urgency_level.toLowerCase()}">${
       order.urgency_level[0].toUpperCase() + order.urgency_level.substring(1)
     }</td>
-                <td><button>View</button></td>
+                <td><a href="requests.html"><button>View</button></q></td>
             </tr>
         `;
   });
