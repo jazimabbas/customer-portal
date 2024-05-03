@@ -66,13 +66,11 @@ function changePassword(req, res) {
         .status(400)
         .json({ message: "Invalid old password", status: 400 });
     }
-    return res
-      .status(200)
-      .json({
-        message: "Password changed successfully",
-        result: rows[0],
-        status: 200,
-      });
+    return res.status(200).json({
+      message: "Password changed successfully",
+      result: rows[0],
+      status: 200,
+    });
   });
 }
 
@@ -97,7 +95,7 @@ function forgotPassword(req, res) {
     console.log(token);
     let mailOptions = {
       from: process.env.MAIL_USERNAME,
-      to: "sepadag869@buzblox.com", // email testing purpose
+      to: "yodado3499@agafx.com", // email testing purpose, should be from db
       subject: "Password Reset Link",
       text: `Hey, click on the link below to reset your password, http://localhost:5005/reset_password.html?user=${userType}&email=${email}&token=${token}`,
     };

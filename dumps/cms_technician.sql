@@ -32,10 +32,11 @@ CREATE TABLE `technician` (
   `ongoing_order_id` int DEFAULT NULL,
   `phone_number` varchar(20) COLLATE utf8mb4_general_ci DEFAULT NULL,
   `token` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `location` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`technician_id`),
   KEY `ongoing_order_id` (`ongoing_order_id`),
   CONSTRAINT `technician_ibfk_1` FOREIGN KEY (`ongoing_order_id`) REFERENCES `ordertable` (`order_id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +45,7 @@ CREATE TABLE `technician` (
 
 LOCK TABLES `technician` WRITE;
 /*!40000 ALTER TABLE `technician` DISABLE KEYS */;
-INSERT INTO `technician` VALUES (1,'tech1@example.com','Bob 1 Technician update','techpass','alarm','free',NULL,'555-5555',NULL),(20,'tech2@example.com','Ilyas','sallypass','autogate','working',NULL,'666-6666',NULL),(21,'ilyas.technician@gmail.com','ilyas technician','523221','autogate','free',NULL,'1122-2211',NULL),(22,'ilyas2.technician@gmail.com','ilyas 2 technician','523221','autogate','free',NULL,'1122-2211',NULL);
+INSERT INTO `technician` VALUES (1,'tech1@example.com','Bob 1 Technician','techpass','alarm','working',2,'555-5555',NULL,'lahore 1'),(20,'tech2@example.com','Ilyas','sallypass','autogate','free',NULL,'666-6666',NULL,'lahore 2'),(21,'ilyas.technician@gmail.com','ilyas technician','523221','autogate','free',NULL,'1122-2211',NULL,'lahore 3'),(23,'jazim@gmail.com','Jazim Technician Update','523221','autogate','free',NULL,'1122-2211',NULL,'lahore 5'),(24,'kashif.tech.@gmail.com','kashif','523221','autogate','free',NULL,'111111111',NULL,NULL);
 /*!40000 ALTER TABLE `technician` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -57,4 +58,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-02  0:07:40
+-- Dump completed on 2024-05-03 23:08:45

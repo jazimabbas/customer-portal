@@ -34,7 +34,7 @@ CREATE TABLE `customer` (
   `warranty` date DEFAULT NULL,
   `token` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
   PRIMARY KEY (`customer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,7 @@ CREATE TABLE `customer` (
 
 LOCK TABLES `customer` WRITE;
 /*!40000 ALTER TABLE `customer` DISABLE KEYS */;
-INSERT INTO `customer` VALUES (2,'Alice','alice@example.com','securepass','9876543210','lahore','undefined','X Brand 2','2025-06-30',NULL),(6,'ilyas','ilyas@gmail.com','523221','12345','Lahore 1','undefined',NULL,NULL,NULL),(7,'noor','noor@gmail.com','523221','12345','Lahore 2','undefined',NULL,NULL,NULL);
+INSERT INTO `customer` VALUES (6,'ilyas','ilyas@gmail.com','ilyas','12345','Lahore 1','X Brand 2','X Brand 2','2025-01-21',NULL),(7,'noor','noor@gmail.com','523221','12345','Lahore 2','X Brand 3','X Brand 3','2025-02-20',NULL),(9,'Zain','zain@gmail.com','523221','12345','Zain Location',NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `customer` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -56,4 +56,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-05-02  0:07:40
+-- Dump completed on 2024-05-03 23:08:45
