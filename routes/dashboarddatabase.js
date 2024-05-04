@@ -24,6 +24,7 @@ const {
   getOrderDetail,
   acceptOrder,
   invoiceOrder,
+  markOrderCompleted,
 } = require("../controllers/ordersController");
 const { decodeToken } = require("../utils/authGuard");
 const {
@@ -57,11 +58,16 @@ router.put("/orders/:id/decline-request", decodeToken, declineOrder);
 router.put("/orders/:id/assign-technician", decodeToken, assignTechnician);
 router.put("/orders/:id/accept", decodeToken, acceptOrder);
 router.get("/orders/:id/invoice", decodeToken, invoiceOrder);
+router.put(
+  "/orders/:id/mark-complete",
+  decodeToken,
+  upload.single("image"),
+  markOrderCompleted
+);
 router.get("/orders/:id/request-detail", decodeToken, viewRequestDetail);
 router.get("/orders/pending/count", decodeToken, pendingOrdersCount);
 router.get("/orders/completed/count", decodeToken, completedOrdersCount);
 router.get("/orders/ongoing/count", decodeToken, ongoingOrdersCount);
-// orders/:orderId/invoice
 // admin routes
 router.post("/admin/technicians", decodeToken, createTechnician);
 router.get("/admin/technicians", decodeToken, getAllTechnicians);

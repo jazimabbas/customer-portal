@@ -76,9 +76,9 @@ document.addEventListener("DOMContentLoaded", function () {
       result.orderStatus === "ongoing"
     ) {
       renderBtnGroup = `
-      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#acceptModal">
+      <a href="mark_complete.html?id=${result.orderId}"><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#acceptModal">
       Mark Completed
-    </button>
+    </button></a>
     
     <button class="btn btn-danger ms-2" data-bs-toggle="modal" data-bs-target="#declineModal">
       Cancel

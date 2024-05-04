@@ -305,6 +305,22 @@ function invoiceOrder(req, res) {
   });
 }
 
+function markOrderCompleted(req, res) {
+  const orderId = req.params.id;
+  const order_done_date = new Date().toISOString().split("T")[0];
+  const order_img = req.file ? `uploads/${req.file.filename}` : null;
+  const pricing_detail = req.body.pricing_detail;
+  const updateOrderQuery = `UPDATE ordertable SET price_details = '${pricing_detail}', order_status = 'completed', order_done_date = '${order_done_date}', order_done_img = '${order_img}' WHERE order_id = ${orderId}`;
+  db.query(updateOrderQuery, (error, results) => {
+    if (error) {
+      console.error("Error executing database query:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+      return;
+    }
+    return res.status(200).json({ status: 200 });
+  });
+}
+
 function getOrdersCountByStatus(status) {
   return `SELECT COUNT(*) AS orders_count FROM ordertable WHERE order_status = "${status}"`;
 }
@@ -445,4 +461,5 @@ module.exports = {
   acceptOrder,
   getOrderDetail,
   invoiceOrder,
+  markOrderCompleted,
 };
