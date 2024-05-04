@@ -82,9 +82,13 @@ document.addEventListener("DOMContentLoaded", function () {
         $("#delete-modal").modal("show");
         // Add event listener to the delete button in modal
         const deleteProfileBtn = deleteModal.querySelector(".deletebtn");
-        deleteProfileBtn.addEventListener("click", () => {
-          confirmDeleteCustomer(customerId);
-        });
+        deleteProfileBtn.addEventListener(
+          "click",
+          () => {
+            confirmDeleteCustomer(customerId);
+          },
+          { once: true }
+        );
       })
       .catch((error) => {
         console.error("Error fetching customer details for deletion:", error);

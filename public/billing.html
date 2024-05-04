@@ -39,26 +39,22 @@
 <div class="dashboard-container">
   <div class="container">
     <div class="container2">
-        
         <div class="customer-info1">
             <div class="customer-details1">
-                <h2>Company Name/Picture</h2>
-      
+                <h2 id="technician_name">Company Name/Picture</h2>
                 <div class="details1">
-                    
-                    <p><strong>Customer Name:</strong> John Doe</p>
-                    <p><strong>Email:</strong> john@example.com</p>
-                    <p><strong>Phone:</strong> +1234567890</p>
-                    <p><strong>Date of Request:</strong> 21/04/24 02:30:00</p>
-                    <p><strong>STATUS:</strong> Completed</p>
+                    <p id="customer_name"><strong>Customer Name:</strong></p>
+                    <p id="customer_email"><strong>Email:</strong></p>
+                    <p id="customer_phone"><strong>Phone:</strong></p>
+                    <p id="order_date"><strong>Date of Request:</strong></p>
+                    <p id="order_status"><strong>STATUS:</strong> Completed</p>
                 </div>
             </div>
             <div class="address">
                 </br>
-                <p>Company Name</p>
-                <p>123 Main Street, City, Country</p>
-                <p>Kuching, Malaysia</p>
-                <p>something@gmail.com</p>
+                <p id="company_name">Company Name</p>
+                <p id="technician_location">123 Main Street, City, Country</p>
+                <p id="technician_email">something@gmail.com</p>
             </div>
         </div>
         </br>
@@ -74,9 +70,9 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>Autogate Repair</td>
-                    <td>3 hr</td>
-                    <td>RM300.00</td>
+                    <td id="problem_type"></td>
+                    <td></td>
+                    <td id="total_price"></td>
                 </tr>
             </tbody>
         </table>
@@ -99,9 +95,9 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td>Rotator</td>
-                        <td>HD12412#1</td>
-                        <td>3 Cartons</td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
                 </tbody>
             </table>
@@ -110,11 +106,11 @@
         </br>
         <div class="details1">
                     
-            <p><strong>Payment Type:</strong> SPAY</p>
+            <p><strong>Payment Type:</strong></p>
             </br>
-            <p><strong>Payment Due:</strong> 23/04/24</p>
+            <p><strong>Payment Due:</strong></p>
             </br>
-            <p><strong>Date of Completion:</strong> 24/04/24</p>
+            <p id="order_done_date"><strong>Date of Completion:</strong></p>
         </div>
     </div>
     
@@ -122,9 +118,9 @@
   </div>
 </div>
 
-<script src="script.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+<script src="./billing.js"></script>
 </body>
 </html>

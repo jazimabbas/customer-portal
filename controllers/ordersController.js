@@ -31,29 +31,54 @@ function createOrder(req, res) {
 }
 
 function viewRequestDetail(req, res) {
+  const { type } = req.user;
   const orderId = req.params.id;
-  const dbQuery = `
+  const status = req.query.status;
+  // console.log(req.query);
+  let dbQuery = "";
+  if (status === "pending" || status === "cancelled") {
+    console.log("inside here");
+    dbQuery = `
     SELECT 
-      ordertable.*,
-      c.name AS customer_name,
-      c.location AS customer_address,
-      c.phone_number AS customer_phone_number,
-      c.email as customer_email,
-      c.auto_gate_brand as customer_auto_gate_brand,
-      c.alarm_brand as customer_alarm_brand,
-      c.warranty as customer_warranty, 
-      t.name AS technician_name,
-      t.phone_number AS technician_phone_number,
-      t.specialization AS technician_specialization
+    ordertable.*,
+    c.name AS customer_name,
+    c.location AS customer_address,
+    c.phone_number AS customer_phone_number,
+    c.email as customer_email,
+    c.auto_gate_brand as customer_auto_gate_brand,
+    c.alarm_brand as customer_alarm_brand,
+    c.warranty as customer_warranty
     FROM 
-      ordertable
+    ordertable
     JOIN 
-      customer c ON ordertable.customer_id = c.customer_id
-    JOIN 
-      technician t ON ordertable.technician_id = t.technician_id
+    customer c ON ordertable.customer_id = c.customer_id
     WHERE 
-      ordertable.order_id = ${orderId}
-  `;
+    ordertable.order_id = ${orderId}
+    `;
+  } else {
+    dbQuery = `
+    SELECT 
+    ordertable.*,
+    c.name AS customer_name,
+    c.location AS customer_address,
+    c.phone_number AS customer_phone_number,
+    c.email as customer_email,
+    c.auto_gate_brand as customer_auto_gate_brand,
+    c.alarm_brand as customer_alarm_brand,
+    c.warranty as customer_warranty, 
+    t.name AS technician_name,
+    t.phone_number AS technician_phone_number,
+    t.specialization AS technician_specialization
+    FROM 
+    ordertable
+    JOIN 
+    customer c ON ordertable.customer_id = c.customer_id
+    JOIN 
+    technician t ON ordertable.technician_id = t.technician_id
+    WHERE 
+    ordertable.order_id = ${orderId}
+    `;
+  }
 
   db.query(dbQuery, (error, results) => {
     if (error) {
@@ -78,8 +103,10 @@ function viewRequestDetail(req, res) {
       priceStatus: results[0].price_status,
       totalPrice: results[0].total_price,
       problem:
-        results[0].technician_specialization[0].toUpperCase() +
-        results[0].technician_specialization.substring(1),
+        (results[0]?.technician_specialization &&
+          results[0].technician_specialization[0].toUpperCase() +
+            results[0].technician_specialization.substring(1)) ||
+        "",
       customer: {
         name: results[0].customer_name,
         address: results[0].customer_address,
@@ -90,9 +117,90 @@ function viewRequestDetail(req, res) {
         warranty: results[0].customer_warranty,
       },
       technician: {
-        name: results[0].technician_name,
-        contactNumber: results[0].technician_phone_number,
-        eta: results[0].technician_eta,
+        name: results[0]?.technician_name || "",
+        contactNumber: results[0]?.technician_phone_number || "",
+        eta: results[0]?.technician_eta || "",
+      },
+      userType: type,
+    };
+
+    return res.status(200).json({ status: 200, result: orderDetails });
+  });
+}
+
+function getOrderDetail(req, res) {
+  const orderId = req.params.id;
+  const { status: orderStatus } = req.query;
+
+  let dbQuery = `
+    SELECT 
+      ordertable.*,
+      c.name AS customer_name,
+      c.location AS customer_address,
+      c.phone_number AS customer_phone_number,
+      c.email as customer_email,
+      c.auto_gate_brand as customer_auto_gate_brand,
+      c.alarm_brand as customer_alarm_brand,
+      c.warranty as customer_warranty
+    FROM 
+      ordertable
+    JOIN 
+      customer c ON ordertable.customer_id = c.customer_id
+  `;
+
+  if (orderStatus !== "pending") {
+    dbQuery += `
+      JOIN 
+        technician t ON ordertable.technician_id = t.technician_id
+    `;
+  }
+
+  dbQuery += `
+    WHERE 
+      ordertable.order_id = ${orderId}
+  `;
+
+  db.query(dbQuery, (error, results) => {
+    if (error) {
+      console.error("Error executing database query:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+      return;
+    }
+
+    if (results.length === 0) {
+      return res.status(404).json({ error: "Order not found", status: 404 });
+    }
+
+    const orderDetails = {
+      orderId: results[0].order_id,
+      orderDate: results[0].order_date,
+      orderDoneDate: results[0].order_done_date,
+      orderStatus: results[0].order_status,
+      orderImage: results[0].order_img,
+      orderDoneImage: results[0].order_done_img,
+      orderDetail: results[0].order_detail,
+      priority: results[0].urgency_level,
+      locationDetail: results[0].location_detail,
+      priceStatus: results[0].price_status,
+      totalPrice: results[0].total_price,
+      problem:
+        (results[0]?.technician_specialization &&
+          results[0].technician_specialization[0].toUpperCase() +
+            results[0].technician_specialization.substring(1)) ||
+        "",
+      customer: {
+        name: results[0].customer_name,
+        address: results[0].customer_address,
+        email: results[0].customer_email,
+        phone: results[0].customer_phone_number,
+        autogateBrand: results[0].customer_auto_gate_brand,
+        alarmBrand: results[0].customer_alarm_brand,
+        warranty: results[0].customer_warranty,
+      },
+      technician: {
+        name: results[0]?.technician_name || "",
+        contactNumber: results[0]?.technician_phone_number || "",
+        eta: results[0]?.technician_eta || "",
       },
     };
 
@@ -106,8 +214,9 @@ function declineOrder(req, res) {
   if (type === "customer") {
     return res.status(401).json({ message: "Unauthorized", status: 401 });
   }
+
   const { id } = req.params;
-  const declineOrderQuery = `UPDATE ordertable SET order_status='cancelled', cancel_details='${cancel_details}' WHERE order_id=${id}`;
+  const declineOrderQuery = `UPDATE ordertable SET technician_id=NULL, order_status='cancelled', cancel_details='${cancel_details}' WHERE order_id='${id}'`;
   db.query(declineOrderQuery, (error, rows) => {
     if (error) {
       throw error;
@@ -133,6 +242,66 @@ function assignTechnician(req, res) {
     return res
       .status(200)
       .json({ message: "Order assigned successfully", status: 200 });
+  });
+}
+function acceptOrder(req, res) {
+  const { type, userId } = req.user;
+  const { id } = req.params;
+  const { eta, total_amount } = req.body;
+
+  if (type !== "technician") {
+    return res.status(401).json({ message: "Unauthorized", status: 401 });
+  }
+  const technician_eta = eta.split("T")[0];
+
+  const acceptOrderQuery = `UPDATE ordertable SET order_status='ongoing', technician_id=${userId}, technician_eta='${technician_eta}', total_price=${total_amount} WHERE order_id=${id}`;
+  db.query(acceptOrderQuery, (error, rows) => {
+    if (error) {
+      throw error;
+    }
+    return res
+      .status(200)
+      .json({ message: "Order accepted successfully", status: 200 });
+  });
+}
+
+function invoiceOrder(req, res) {
+  const orderId = req.params.id;
+
+  const invoiceQuery = `
+  SELECT 
+      o.order_id,
+      o.order_date,
+      o.order_status,
+      o.total_price,
+      o.problem_type,
+      o.order_done_date,
+      c.name AS customer_name,
+      c.location AS customer_address,
+      c.email AS customer_email,
+      c.phone_number AS customer_phone_number,
+      t.name AS technician_name,
+      t.location AS technician_location,
+      t.email AS technician_email
+    FROM 
+      ordertable o
+      LEFT JOIN customer c ON o.customer_id = c.customer_id
+      LEFT JOIN technician t ON o.technician_id = t.technician_id
+    WHERE 
+      o.order_id = ${orderId} AND
+      o.order_status = 'completed'
+  `;
+  db.query(invoiceQuery, (error, results) => {
+    if (error) {
+      console.error("Error executing database query:", error);
+      res.status(500).json({ error: "Internal Server Error" });
+      return;
+    }
+    if (results.length === 0) {
+      res.status(404).json({ error: "Order not found" });
+      return;
+    }
+    return res.status(200).json({ status: 200, result: results[0] });
   });
 }
 
@@ -197,10 +366,10 @@ function viewAllOrders(req, res) {
   } else if (type === "technician") {
     // Select orders associated with the technician and join technician information
     viewAllOrdersQuery = `
-      SELECT o.*, t.name AS technician_name,  t.email AS technician_email, c.location AS customer_location
+      SELECT o.*, t.name AS technician_name,  t.email AS technician_email, t.location AS technician_location
       FROM ordertable o
       JOIN technician t ON o.technician_id = t.technician_id
-      WHERE o.technician_id = '${userId}'
+      WHERE o.technician_id = ${userId}
     `;
   } else {
     // For admin users, retrieve all orders with optional status filter
@@ -221,10 +390,9 @@ function viewAllOrders(req, res) {
     viewAllOrdersQuery = pendingOrdersQuery();
   }
   // Append status filter if provided and user is admin or technician
-  if (status && (type === "admin" || type === "technician")) {
+  if (status && type === "admin") {
     viewAllOrdersQuery += ` WHERE o.order_status = '${status}'`;
-  } else if (status && type === "customer") {
-    // Append status filter for customer's orders
+  } else if (status) {
     viewAllOrdersQuery += ` AND o.order_status = '${status}'`;
   }
 
@@ -274,4 +442,7 @@ module.exports = {
   viewCompletedOrderHistory,
   viewRequestDetail,
   assignTechnician,
+  acceptOrder,
+  getOrderDetail,
+  invoiceOrder,
 };

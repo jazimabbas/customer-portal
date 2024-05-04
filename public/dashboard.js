@@ -149,6 +149,7 @@ function customerPendingOrders(orders) {
 // Display Ongoing Orders
 function customerOngoingOrders(orders) {
   const container = document.getElementById("customer-ongoing-orders");
+  console.log(orders);
   if (orders.length === 0) {
     container.innerHTML = "No ongoing orders found.";
     return;

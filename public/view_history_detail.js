@@ -98,7 +98,7 @@ function renderDetail(data) {
       </div>
       <div class="row mt-4">
         <div class="col-md-12 text-center">
-          <a href="billing.html" ><button class="cancelbtn2">View Bill</button></a> 
+          <a href="billing.html?id=${data.orderId}" ><button class="cancelbtn2">View Bill</button></a> 
         </div>
       </div>`;
   }

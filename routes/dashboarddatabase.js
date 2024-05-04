@@ -21,6 +21,9 @@ const {
   viewCompletedOrderHistory,
   viewRequestDetail,
   assignTechnician,
+  getOrderDetail,
+  acceptOrder,
+  invoiceOrder,
 } = require("../controllers/ordersController");
 const { decodeToken } = require("../utils/authGuard");
 const {
@@ -52,6 +55,8 @@ router.post("/orders", decodeToken, upload.single("image"), createOrder);
 router.get("/orders/history", decodeToken, viewCompletedOrderHistory);
 router.put("/orders/:id/decline-request", decodeToken, declineOrder);
 router.put("/orders/:id/assign-technician", decodeToken, assignTechnician);
+router.put("/orders/:id/accept", decodeToken, acceptOrder);
+router.get("/orders/:id/invoice", decodeToken, invoiceOrder);
 router.get("/orders/:id/request-detail", decodeToken, viewRequestDetail);
 router.get("/orders/pending/count", decodeToken, pendingOrdersCount);
 router.get("/orders/completed/count", decodeToken, completedOrdersCount);
