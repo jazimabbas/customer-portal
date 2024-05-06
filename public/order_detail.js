@@ -61,7 +61,12 @@ document.addEventListener("DOMContentLoaded", function () {
       `;
     }
     let renderBtnGroup = "";
-    if (result.userType === "technician" && result.orderStatus === "pending") {
+    console.log(result.accepted);
+    if (
+      result.userType === "technician" &&
+      result.orderStatus === "ongoing" &&
+      result.accepted === 0
+    ) {
       renderBtnGroup = `
       <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#acceptModal">
       Accept
@@ -73,7 +78,8 @@ document.addEventListener("DOMContentLoaded", function () {
           `;
     } else if (
       result.userType === "technician" &&
-      result.orderStatus === "ongoing"
+      result.orderStatus === "ongoing" &&
+      result.accepted === 1
     ) {
       renderBtnGroup = `
       <a href="mark_complete.html?id=${result.orderId}"><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#acceptModal">

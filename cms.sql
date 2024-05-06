@@ -91,7 +91,8 @@ CREATE TABLE `ordertable` (
   `location_details` varchar(255) DEFAULT NULL,
   `price_details` varchar(255) DEFAULT NULL,
   `price_status` enum('paid','unpaid') DEFAULT 'unpaid',
-  `total_price` int(11) DEFAULT NULL
+  `total_price` int(11) DEFAULT NULL,
+  `accept` boolean DEFAULT false
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
