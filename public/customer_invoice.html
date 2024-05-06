@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Schedule</title>
+<link rel="stylesheet" href="style.css">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+  
+<div class="header">
+  <div class="header-content">
+    <!-- Place your bell and profile icons here -->
+    <a href="notification.html"><img src="images/notification.svg" alt="Notifications" class="icon"></a>
+    <img src="images/profile.svg" alt="Profile" class="icon">
+  </div>
+</div>
+
+
+<div class="sidebar">
+    <!-- Sidebar content -->
+    <ul>
+      <li><a href="customer_dashboard.html">Dashboard</a></li>
+      <li><a href="create_order.html">Create Order</a></li>
+      <li><a href="change_password.html">Change Password</a></li>
+      <li id="logout"><a href="login.html">Logout</a></li>
+    </ul>
+  </div>
+
+<div class="dashboard-container">
+  <div class="container">
+    <div class="container2">
+        <div class="customer-info1">
+            <div class="customer-details1">
+                <h2 id="technician_name">Company Name/Picture</h2>
+                <div class="details1">
+                    <p id="customer_name"><strong>Customer Name:</strong></p>
+                    <p id="customer_email"><strong>Email:</strong></p>
+                    <p id="customer_phone"><strong>Phone:</strong></p>
+                    <p id="order_date"><strong>Date of Request:</strong></p>
+                    <p id="order_status"><strong>STATUS:</strong> Completed</p>
+                </div>
+            </div>
+            <div class="address">
+                </br>
+                <p id="company_name">Company Name</p>
+                <p id="technician_location">123 Main Street, City, Country</p>
+                <p id="technician_email">something@gmail.com</p>
+            </div>
+        </div>
+        </br>
+        </br>
+        <table class="billtable">
+            <thead>
+                <tr >
+                    <th>Service</th>
+                    <th>Work Time</th>
+                    <th>Total</th>
+                    </hr>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td id="problem_type"></td>
+                    <td></td>
+                    <td id="total_price"></td>
+                </tr>
+            </tbody>
+        </table>
+        </br>
+        </br>
+        <hr class="hrbill">
+        </br>
+        </br>
+        <h4>Parts Requested</h4>
+        </br>
+        <div class="container3">
+            <table class="billtable">
+                <thead>
+                    <tr >
+                        <th>Item Name</th>
+                        <th>Serial No</th>
+                        <th>Unit</th>
+                        </hr>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        </br>
+        </br>
+        <div class="details1">
+                    
+            <p><strong>Payment Type:</strong></p>
+            </br>
+            <p><strong>Payment Due:</strong></p>
+            </br>
+            <p id="order_done_date"><strong>Date of Completion:</strong></p>
+        </div>
+    </div>
+    
+  
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+<script src="./billing.js"></script>
+</body>
+</html>

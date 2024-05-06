@@ -1,6 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
   const baseUrl = "http://localhost:5005/dashboarddatabase";
 
+  const logout = document.getElementById("logout");
+  logout.addEventListener("click", () => {
+    localStorage.removeItem("token");
+    window.location.href = "login.html";
+  });
+
   const token = localStorage.getItem("token");
   if (!token) {
     window.location.href = "login.html";

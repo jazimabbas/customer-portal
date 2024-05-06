@@ -1,4 +1,10 @@
 document.addEventListener("DOMContentLoaded", function () {
+  const logout = document.getElementById("logout");
+  logout.addEventListener("click", () => {
+    localStorage.removeItem("token");
+    window.location.href = "login.html";
+  });
+
   const baseURL = "http://localhost:5005/dashboarddatabase"; // Base URL for API requests
 
   function fetchCustomerById(customerId) {

@@ -61,11 +61,11 @@ document.addEventListener("DOMContentLoaded", function () {
       `;
     }
     let renderBtnGroup = "";
-    console.log(result.accepted);
+    console.log(result.accept);
     if (
       result.userType === "technician" &&
       result.orderStatus === "ongoing" &&
-      result.accepted === 0
+      result.accept === 0
     ) {
       renderBtnGroup = `
       <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#acceptModal">
@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
     } else if (
       result.userType === "technician" &&
       result.orderStatus === "ongoing" &&
-      result.accepted === 1
+      result.accept === 1
     ) {
       renderBtnGroup = `
       <a href="mark_complete.html?id=${result.orderId}"><button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#acceptModal">
@@ -92,7 +92,7 @@ document.addEventListener("DOMContentLoaded", function () {
          `;
     } else if (result.orderStatus === "completed") {
       renderBtnGroup = `
-      <a href="billing.html?id=${result.orderId}"><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#acceptModal">
+      <a href="customer_invoice.html?id=${result.orderId}"><button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#acceptModal">
       View Bill
     </button>
       </a>

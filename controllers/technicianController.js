@@ -6,7 +6,8 @@ function createTechnician(req, res) {
   if (type !== "admin") {
     return res.status(401).json({ message: "Unauthorized" });
   }
-  const { email, name, password, specialization, phone_number } = req.body;
+  const { email, name, password, specialization, phone_number, location } =
+    req.body;
 
   // check technician exist
   const isTechnicianExist = `SELECT * FROM technician WHERE email="${email}"`;
@@ -21,8 +22,8 @@ function createTechnician(req, res) {
         .status(400)
         .json({ message: "email already exists", status: 400 });
     }
-    const createTechnicianQuery = `INSERT INTO technician (email, name, password, specialization, status, phone_number)
-          VALUES ('${email}', '${name}', '${password}', '${specialization}', 'free', '${phone_number}')`;
+    const createTechnicianQuery = `INSERT INTO technician (email, name, password, specialization, status, phone_number, location)
+          VALUES ('${email}', '${name}', '${password}', '${specialization}', 'free', '${phone_number}', '${location}')`;
 
     db.query(createTechnicianQuery, (error, rows) => {
       if (error) {
@@ -82,13 +83,13 @@ function getTechnicianById(req, res) {
 function updateTechnician(req, res) {
   const { type } = req.user;
   const technicianId = req.params.id;
-  const { name, specialization, phone_number, email } = req.body;
+  const { name, specialization, phone_number, email, location } = req.body;
 
   if (type !== "admin") {
     return res.status(401).json({ message: "Unauthorized", status: 401 });
   }
 
-  const updateQuery = `UPDATE technician SET name ='${name}' , email = '${email}' , specialization = '${specialization}', phone_number = '${phone_number}' WHERE technician_id = ${technicianId}`;
+  const updateQuery = `UPDATE technician SET location = '${location}' , name ='${name}' , email = '${email}' , specialization = '${specialization}', phone_number = '${phone_number}' WHERE technician_id = ${technicianId}`;
   db.query(updateQuery, (error, result) => {
     if (error) {
       console.error(error);

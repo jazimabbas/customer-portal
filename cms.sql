@@ -77,21 +77,21 @@ CREATE TABLE `ordertable` (
   `order_id` int(11) NOT NULL,
   `customer_id` int(11) DEFAULT NULL,
   `order_date` date DEFAULT NULL,
-  `order_done_date` date DEFAULT NULL,
   `order_time` time DEFAULT NULL,
   `order_status` enum('pending','ongoing','completed','cancelled') DEFAULT 'pending',
   `order_detail` varchar(255) DEFAULT NULL,
   `order_img` varchar(255) DEFAULT NULL,
   `order_done_img` varchar(255) DEFAULT NULL,
   `urgency_level` enum('standard','urgent','emergency') DEFAULT NULL,
-  `problem_type` enum('alarm','autogate') DEFAULT NULL,
   `technician_id` int(11) DEFAULT NULL,
-  `technician_eta` date DEFAULT NULL,
   `cancel_details` varchar(255) DEFAULT NULL,
   `location_details` varchar(255) DEFAULT NULL,
   `price_details` varchar(255) DEFAULT NULL,
   `price_status` enum('paid','unpaid') DEFAULT 'unpaid',
   `total_price` int(11) DEFAULT NULL,
+  `technician_eta` date DEFAULT NULL,
+  `problem_type` enum('alarm','autogate') DEFAULT NULL,
+  `order_done_date` date DEFAULT NULL,
   `accept` boolean DEFAULT false
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -99,13 +99,13 @@ CREATE TABLE `ordertable` (
 -- Dumping data for table `ordertable`
 --
 
-INSERT INTO `ordertable` (`order_id`, `customer_id`, `order_date`, `order_time`, `order_status`, `order_detail`, `order_img`, `order_done_img`, `urgency_level`, `technician_id`, `cancel_details`, `location_details`, `price_details`, `price_status`) VALUES
-(1, 1, '2024-04-15', '14:30:00', 'pending', 'Replace alarm system battery', 'img123.jpg', NULL, 'standard', NULL, NULL, 'Backyard door', 'https://example.com/pricing', 'unpaid'),
-(2, 2, '2024-04-16', '10:00:00', 'ongoing', 'Install autogate opener', 'img456.jpg', NULL, 'urgent', NULL, NULL, 'Front gate', 'https://example.com/pricing', 'paid'),
-(5, 1, '2024-04-15', '14:30:00', 'pending', 'Replace alarm system battery', 'img123.jpg', NULL, 'standard', NULL, NULL, 'Backyard door', 'https://example.com/pricing', 'unpaid'),
-(6, 2, '2024-04-16', '10:00:00', 'ongoing', 'Install autogate opener', 'img456.jpg', NULL, 'urgent', NULL, NULL, 'Front gate', 'https://example.com/pricing', 'paid'),
-(7, 1, '2024-04-15', '14:30:00', 'pending', 'Replace alarm system battery', 'img123.jpg', NULL, 'standard', NULL, NULL, 'Backyard door', 'https://example.com/pricing', 'unpaid'),
-(8, 2, '2024-04-16', '10:00:00', 'ongoing', 'Install autogate opener', 'img456.jpg', NULL, 'urgent', NULL, NULL, 'Front gate', 'https://example.com/pricing', 'paid');
+-- INSERT INTO `ordertable` (`order_id`, `customer_id`, `order_date`, `order_time`, `order_status`, `order_detail`, `order_img`, `order_done_img`, `urgency_level`, `technician_id`, `cancel_details`, `location_details`, `price_details`, `price_status`) VALUES
+-- (1, 1, '2024-04-15', '14:30:00', 'pending', 'Replace alarm system battery', 'img123.jpg', NULL, 'standard', NULL, NULL, 'Backyard door', 'https://example.com/pricing', 'unpaid'),
+-- (2, 2, '2024-04-16', '10:00:00', 'ongoing', 'Install autogate opener', 'img456.jpg', NULL, 'urgent', NULL, NULL, 'Front gate', 'https://example.com/pricing', 'paid'),
+-- (5, 1, '2024-04-15', '14:30:00', 'pending', 'Replace alarm system battery', 'img123.jpg', NULL, 'standard', NULL, NULL, 'Backyard door', 'https://example.com/pricing', 'unpaid'),
+-- (6, 2, '2024-04-16', '10:00:00', 'ongoing', 'Install autogate opener', 'img456.jpg', NULL, 'urgent', NULL, NULL, 'Front gate', 'https://example.com/pricing', 'paid'),
+-- (7, 1, '2024-04-15', '14:30:00', 'pending', 'Replace alarm system battery', 'img123.jpg', NULL, 'standard', NULL, NULL, 'Backyard door', 'https://example.com/pricing', 'unpaid'),
+-- (8, 2, '2024-04-16', '10:00:00', 'ongoing', 'Install autogate opener', 'img456.jpg', NULL, 'urgent', NULL, NULL, 'Front gate', 'https://example.com/pricing', 'paid');
 
 -- --------------------------------------------------------
 
@@ -152,11 +152,11 @@ CREATE TABLE `technician` (
 -- Dumping data for table `technician`
 --
 
-INSERT INTO `technician` (`technician_id`, `email`, `name`, `password`, `specialization`, `status`, `ongoing_order_id`, `phone_number`) VALUES
-(1, 'tech1@example.com', 'Bob Technician', 'techpass', 'alarm', 'free', NULL, '555-5555'),
-(2, 'tech2@example.com', 'Sally Engineer', 'sallypass', 'autogate', 'working', NULL, '666-6666'),
-(19, 'tech1@example.com', 'Bob Technician', 'techpass', 'alarm', 'free', NULL, '555-5555'),
-(20, 'tech2@example.com', 'Sally Engineer', 'sallypass', 'autogate', 'working', NULL, '666-6666');
+-- INSERT INTO `technician` (`technician_id`, `email`, `name`, `password`, `specialization`, `status`, `ongoing_order_id`, `phone_number`) VALUES
+-- (1, 'tech1@example.com', 'Bob Technician', 'techpass', 'alarm', 'free', NULL, '555-5555'),
+-- (2, 'tech2@example.com', 'Sally Engineer', 'sallypass', 'autogate', 'working', NULL, '666-6666'),
+-- (19, 'tech1@example.com', 'Bob Technician', 'techpass', 'alarm', 'free', NULL, '555-5555'),
+-- (20, 'tech2@example.com', 'Sally Engineer', 'sallypass', 'autogate', 'working', NULL, '666-6666');
 
 --
 -- Indexes for dumped tables
@@ -239,7 +239,7 @@ ALTER TABLE `technician`
 --
 ALTER TABLE `ordertable`
   ADD CONSTRAINT `fk_customer_id` FOREIGN KEY (`customer_id`) REFERENCES `customer` (`customer_id`) ON DELETE CASCADE,
-  ADD CONSTRAINT `fk_technician_id` FOREIGN KEY (`technician_id`) REFERENCES `technician` (`technician_id`) ON DELETE SET NULL;
+  ADD CONSTRAINT `fk_technician_id` FOREIGN KEY (`technician_id`) REFERENCES `technician` (`technician_id`) ON DELETE NULL;
 
 --
 -- Constraints for table `requestspareparttable`

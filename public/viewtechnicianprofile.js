@@ -42,6 +42,8 @@ document.addEventListener("DOMContentLoaded", function () {
             technician.phone_number;
           document.querySelector(".technician-job").textContent =
             technician.specialization;
+          document.querySelector(".technician-location").textContent =
+            technician.location;
         } else {
           console.error("Error fetching technician details:", data.message);
         }

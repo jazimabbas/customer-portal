@@ -36,6 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
         editModal.querySelector(".email").value = technician.email;
         editModal.querySelector(".phone").value = technician.phone_number;
         editModal.querySelector(".job").value = technician.specialization;
+        editModal.querySelector(".location").value = technician.location;
 
         // Show the edit modal
         $("#edit-modal").modal("show");
@@ -63,7 +64,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const email = editModal.querySelector(".email").value;
     const phone_number = editModal.querySelector(".phone").value;
     const specialization = editModal.querySelector(".job").value;
-    return { name, email, phone_number, specialization };
+    const location = editModal.querySelector(".location").value;
+    return { name, email, phone_number, specialization, location };
   }
   function fetchTechnicianByIdForDelete(technicianId) {
     return fetchTechnicianById(technicianId)
@@ -79,12 +81,15 @@ document.addEventListener("DOMContentLoaded", function () {
           technician.phone_number;
         deleteModal.querySelector(".technician_job").textContent =
           technician.specialization;
+        deleteModal.querySelector(".technician-location").textContent =
+          technician.location;
 
         // Show the delete modal
         $("#delete-modal").modal("show");
         // Add event listener to the delete button in modal
         const deleteProfileBtn = deleteModal.querySelector(".deletebtn");
         deleteProfileBtn.addEventListener("click", () => {
+          console.log(technicianId);
           confirmDeleteTechnician(technicianId);
         });
       })
@@ -134,13 +139,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function getNewTechnicianData() {
     const addModal = document.getElementById("add-modal");
-    // console.log(addModal);
     const name = addModal.querySelector(".name").value;
     const email = addModal.querySelector(".email").value;
     const phone_number = addModal.querySelector(".phone").value;
     const password = addModal.querySelector(".password").value;
     const specialization = addModal.querySelector(".specialization").value;
-    return { name, email, phone_number, specialization, password };
+    const location = addModal.querySelector(".location").value;
+    return { name, email, phone_number, specialization, password, location };
   }
 
   function addTechnician(newTechnicianData) {

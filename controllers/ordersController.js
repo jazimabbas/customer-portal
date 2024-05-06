@@ -102,7 +102,7 @@ function viewRequestDetail(req, res) {
       locationDetail: results[0].location_detail,
       priceStatus: results[0].price_status,
       totalPrice: results[0].total_price,
-      accepted: results[0].accepted,
+      accept: results[0].accept,
       problem:
         (results[0]?.technician_specialization &&
           results[0].technician_specialization[0].toUpperCase() +
@@ -255,7 +255,7 @@ function acceptOrder(req, res) {
   }
   const technician_eta = eta.split("T")[0];
 
-  const acceptOrderQuery = `UPDATE ordertable SET order_status='ongoing', accepted='1', technician_id=${userId}, technician_eta='${technician_eta}', total_price=${total_amount} WHERE order_id=${id}`;
+  const acceptOrderQuery = `UPDATE ordertable SET order_status='ongoing', accept='1', technician_id=${userId}, technician_eta='${technician_eta}', total_price=${total_amount} WHERE order_id=${id}`;
   db.query(acceptOrderQuery, (error, rows) => {
     if (error) {
       throw error;

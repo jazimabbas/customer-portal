@@ -24,11 +24,11 @@
   <ul>
     <li><a href="dashboard.html">Dashboard</a></li>
     <li>Request</a></li>
-    <li><a href="requests.html">Current Requests</a></li>
+    <li><a href="requests.html" id="current-requests">Current Requests</a></li>
     <li><a href="history.html">Requests History</a></li>
     <li>Profiles</a></li>
-    <li><a href="technician.html" class="active">Technician</a></li>
-    <li><a href="customer.html" >Customer</a></li>
+    <li><a href="technician.html">Technician</a></li>
+    <li><a href="customer.html">Customer</a></li>
     <li>Schedule</a></li>
     <li><a href="technician_schedule.html">Technician</a></li>
     <!-- Additional links can be added here -->
@@ -104,6 +104,10 @@
             <label for="phone">Phone Number:</label>
             <input type="text" id="phone" class="form-control phone">
           </div>
+          <div class="form-group">
+            <label for="location">Location:</label>
+            <input type="text" id="location" class="form-control location">
+          </div>
         </form>
       </div>
       <div class="modal-footer">
@@ -138,7 +142,10 @@
             <label for="job">Job Type:</label>
             <input type="text" class="form-control job" id="edit-job">
           </div>
-
+          <div class="form-group">
+            <label for="location">Location:</label>
+            <input type="text" id="location" class="form-control location">
+          </div>
         </form>
       </div>
       <div class="modal-footer">
@@ -158,7 +165,7 @@
             <h2 class="alignh2">Are you sure you want to delete this profile?</h2>
           </br>
           <p><strong>Name:</strong> <span class="technician-name"></span></p>
-          <!-- <p><strong>Location:</strong> <span class="technician-address"></span></p> -->
+          <p><strong>Location:</strong> <span class="technician-location"></span></p>
           <p><strong>Email:</strong> <span class="technician-email"></span></p>
           <p><strong>Phone No:</strong> <span class="technician_phone"></span></p>
           <p><strong>Job Type:</strong> <span class="technician_job"></span></p>
